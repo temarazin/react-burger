@@ -1,0 +1,38 @@
+.container {
+  background-color: #1c1c21;
+}
+
+.container__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr fit-content(30%) 1fr;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.menu_justify_end {
+  justify-content: flex-end;
+}
+
+.menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.menu__button {
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  color: #8585ad;
+}
+
+.menu__button_active {
+  color: #f2f2f3;
+}
