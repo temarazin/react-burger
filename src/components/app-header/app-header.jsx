@@ -8,13 +8,13 @@ function AppHeader(props) {
         <nav className={styles.menu}>
           <ul className={`${styles.menu__list}`}>
             <li className={styles.menu__item}>
-              <button className={`${styles.menu__button} ${styles.menu__button_active} p-4`}>
+              <button className={`${styles.menu__button} ${styles.menu__button_active} p-5`}>
                 <BurgerIcon type="primary" />
                 <span className="text text_type_main-default ml-2">Конструктор</span>
               </button>
             </li>
             <li className={styles.menu__item}>
-            <button className={`${styles.menu__button} p-4`}>
+            <button className={`${styles.menu__button} p-5`}>
               <ListIcon type="secondary" />
                 <span className="text text_type_main-default ml-2">Лента заказов</span>
               </button>
@@ -25,7 +25,7 @@ function AppHeader(props) {
         <nav className={`${styles.menu} ${styles.menu_justify_end}`}>
           <ul className={`${styles.menu__list}`}>
             <li className={styles.menu__item}>
-              <button className={`${styles.menu__button} p-4`}>
+              <button className={`${styles.menu__button} p-5`}>
                 <ProfileIcon type="secondary" />
                 <span className="text text_type_main-default ml-2">Личный кабинет</span>
               </button>

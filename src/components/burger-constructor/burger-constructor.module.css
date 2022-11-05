@@ -1,0 +1,43 @@
+.constructor {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100vh - 344px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #8585ad #2f2f37;
+}
+
+.constructor::-webkit-scrollbar {
+  width: 8px;
+}
+
+.constructor::-webkit-scrollbar-button {
+  display: none;
+}
+
+.constructor::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.constructor::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+
+.constructor__item {
+  display: flex;
+  align-items: center;
+}
+
+.icon-wrapper {
+  flex: 0 0 24px;
+}
+
+.order-submit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
