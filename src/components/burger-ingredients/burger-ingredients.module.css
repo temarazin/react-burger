@@ -1,0 +1,26 @@
+.tabs {
+  display: flex;
+}
+
+.content {
+  max-height: calc(100vh - 324px);
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #8585ad #2f2f37;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-button {
+  display: none;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.content::-webkit-scrollbar-track {
+  background: #2f2f37;
+}

@@ -3,7 +3,7 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 
 function AppHeader(props) {
   return (
-    <header className={`${styles.container} ${props.className || ''}`}>
+    <header className={`${styles.container} ${props.className || ''} p-4`}>
       <div className={styles.container__inner}>
         <nav className={styles.menu}>
           <ul className={`${styles.menu__list}`}>
