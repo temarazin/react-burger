@@ -1,12 +1,9 @@
 import '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app.module.css';
-import AppHeader from './components/app-header/app-header';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from './components/burger-constructor/burger-constructor';
-import Modal from './components/modal/modal';
-import OrderDetails from './components/order-details/order-details';
-import IngredientDetails from './components/ingredient-details/ingredient-details';
-import api from './utils/api';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import api from '../../utils/api';
 import { useState, useEffect } from 'react';
 
 function App() {
