@@ -1,41 +1,41 @@
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 function AppHeader(props) {
   return (
     <header className={`${styles.container} ${props.className || ''} p-4`}>
-      <div className={styles.container__inner}>
-        <nav className={styles.menu}>
+      <nav className={styles.container__inner}>
           <ul className={`${styles.menu__list}`}>
             <li className={styles.menu__item}>
-              <button className={`${styles.menu__button} ${styles.menu__button_active} p-5`}>
+              <a href="/" className={`${styles.menu__button} ${styles.menu__button_active} p-5`}>
                 <BurgerIcon type="primary" />
                 <span className="text text_type_main-default ml-2">Конструктор</span>
-              </button>
+              </a>
             </li>
             <li className={styles.menu__item}>
-            <button className={`${styles.menu__button} p-5`}>
-              <ListIcon type="secondary" />
+              <a href="/" className={`${styles.menu__button} p-5`}>
+                <ListIcon type="secondary" />
                 <span className="text text_type_main-default ml-2">Лента заказов</span>
-              </button>
+              </a>
             </li>
           </ul>
-        </nav>
         <Logo></Logo>
-        <nav className={`${styles.menu} ${styles.menu_justify_end}`}>
-          <ul className={`${styles.menu__list}`}>
+          <ul className={`${styles.menu__list} ${styles.menu__list_secondary}`}>
             <li className={styles.menu__item}>
-              <button className={`${styles.menu__button} p-5`}>
+              <a href="/" className={`${styles.menu__button} p-5`}>
                 <ProfileIcon type="secondary" />
                 <span className="text text_type_main-default ml-2">Личный кабинет</span>
-              </button>
+              </a>
             </li>
           </ul>
-        </nav>
-      </div>
+      </nav>
 
     </header>
   );
+}
+AppHeader.propType = {
+  className: PropTypes.string,
 }
 
 export default AppHeader;

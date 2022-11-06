@@ -11,7 +11,6 @@ function ModalOverlay(props) {
 
   return (
     <div className={styles['modal-overlay']} onClick={handleClick}>
-      {props.children}
     </div>
   )
 }

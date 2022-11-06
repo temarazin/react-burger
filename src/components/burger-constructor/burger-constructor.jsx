@@ -26,7 +26,7 @@ function BurgerConstructor(props) {
 
   return (
     <>
-      <div className="mt-25">
+      <section className="mt-25" aria-label="Конструктор">
         <ul className={`${styles.constructor} pr-4 pl-4`}>
           <li className={`${styles.constructor__item}`}>
             <span className={`${styles['icon-wrapper']} pr-2`}></span>
@@ -105,13 +105,13 @@ function BurgerConstructor(props) {
             Оформить заказ
           </Button>
         </div>
-      </div>
+      </section>
       {isModalOpened && modal}
     </>
   )
 }
 BurgerConstructor.propType = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes()),
+  ingredients: PropTypes.arrayOf(ingredientPropTypes()).isRequired,
 }
 
 export default BurgerConstructor;

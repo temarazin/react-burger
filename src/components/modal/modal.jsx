@@ -10,7 +10,6 @@ const modalPlace = document.getElementById('modal');
 function Modal(props) {
 
   const handleEsc = (e) => {
-    console.log(e);
     if (e.key === 'Escape') {
       onClose();
     }
@@ -25,7 +24,8 @@ function Modal(props) {
   const {children, onClose, title} = props;
 
   return ReactDOM.createPortal(
-    <ModalOverlay onClose={onClose}>
+    <>
+      <ModalOverlay onClose={onClose} />
       <div className={`${styles.modal} pt-10 pr-10 pb-15 pl-10`}>
         <div className={styles.modal__header}>
           <h3 className={`${styles.modal__title} text text_type_main-medium`}>{title}</h3>
@@ -37,7 +37,8 @@ function Modal(props) {
           {children}
         </div>
       </div>
-    </ModalOverlay>,
+    </>
+    ,
     modalPlace
   );
 }

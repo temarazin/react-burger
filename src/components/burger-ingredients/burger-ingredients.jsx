@@ -32,6 +32,9 @@ function BurgerIngredients(props) {
   return (
     <>
       <section>
+        <h1 className='text text_type_main-large mt-5 mb-5'>
+          Соберите бургер
+        </h1>
         <div className={`${styles.tabs} mb-10`}>
           <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
             Булки
@@ -58,7 +61,7 @@ function BurgerIngredients(props) {
 }
 BurgerIngredients.defaultProps = {ingredients: []};
 BurgerIngredients.propType = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes()),
+  ingredients: PropTypes.arrayOf(ingredientPropTypes()).isRequired,
 }
 
 export default BurgerIngredients;

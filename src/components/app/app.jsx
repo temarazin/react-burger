@@ -21,15 +21,8 @@ function App() {
       <div className="App">
         <AppHeader className="mb-5" />
         <main className={styles.content}>
-          <div>
-            <h1 className='text text_type_main-large mt-5 mb-5'>
-              Соберите бургер
-            </h1>
-            <BurgerIngredients ingredients={ingredientsData} />
-          </div>
-          <div>
-            <BurgerConstructor />
-          </div>
+          <BurgerIngredients ingredients={ingredientsData} />
+          <BurgerConstructor />
         </main>
       </div>
     </>

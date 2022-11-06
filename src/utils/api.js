@@ -12,8 +12,9 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  // TODO: Выводить ошибки пользователю, а не в консоль.
   getIngredients() {
-    return fetch(this._baseUrl, {
+    return fetch(`${this._baseUrl}/ingredients`, {
       headers: this._headers,
     }).then((res) => {
       return this._checkResponse(res);
@@ -22,7 +23,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://norma.nomoreparties.space/api/ingredients",
+  baseUrl: "https://norma.nomoreparties.space/api",
   headers: {
     "Content-Type": "application/json",
   },

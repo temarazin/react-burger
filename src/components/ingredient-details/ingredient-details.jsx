@@ -36,7 +36,7 @@ function IngredientDetails(props) {
   );
 }
 IngredientDetails.propType ={
-  currentIngredient: ingredientPropTypes(),
+  currentIngredient: ingredientPropTypes().isRequired,
 }
 
 export default IngredientDetails;

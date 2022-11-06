@@ -24,7 +24,7 @@ function BurderIngredientCategory(props) {
   )
 }
 BurderIngredientCategory.propType ={
-  currentIngredient: ingredientPropTypes(),
+  currentIngredient: ingredientPropTypes().isRequired,
 }
 
 export default BurderIngredientCategory;
