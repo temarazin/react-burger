@@ -1,5 +1,6 @@
 import styles from './burger-ingredient-category.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 function BurderIngredientCategory(props) {
 
@@ -21,6 +22,9 @@ function BurderIngredientCategory(props) {
       })}
     </ul>
   )
+}
+BurderIngredientCategory.propType ={
+  currentIngredient: ingredientPropTypes(),
 }
 
 export default BurderIngredientCategory;

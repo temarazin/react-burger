@@ -5,6 +5,8 @@ import BurderIngredientCategory from '../burger-ingredient-category/burger-ingre
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 function BurgerIngredients(props) {
 
@@ -17,7 +19,6 @@ function BurgerIngredients(props) {
   }
 
   const showIngredient = (id) => {
-    console.log(props.ingredients.find(item => item._id === id));
     setCurrentIgredient(props.ingredients.find(item => item._id === id));
     setIsModalOpened(true);
   }
@@ -56,5 +57,8 @@ function BurgerIngredients(props) {
   );
 }
 BurgerIngredients.defaultProps = {ingredients: []};
+BurgerIngredients.propType = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes()),
+}
 
 export default BurgerIngredients;

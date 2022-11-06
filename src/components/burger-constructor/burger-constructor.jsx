@@ -3,6 +3,8 @@ import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktiku
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 function BurgerConstructor(props) {
 
@@ -107,6 +109,9 @@ function BurgerConstructor(props) {
       {isModalOpened && modal}
     </>
   )
+}
+BurgerConstructor.propType = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes()),
 }
 
 export default BurgerConstructor;
