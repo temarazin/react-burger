@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const modalPlace = document.getElementById('modal');
 
-function Modal(props) {
+function Modal({ children, onClose, title }) {
 
   const handleEsc = (e) => {
     if (e.key === 'Escape') {
@@ -20,8 +20,6 @@ function Modal(props) {
 
     return () => document.removeEventListener('keydown', handleEsc);
   }, []);
-
-  const {children, onClose, title} = props;
 
   return ReactDOM.createPortal(
     <>

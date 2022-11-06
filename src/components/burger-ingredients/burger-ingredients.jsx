@@ -8,7 +8,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
-function BurgerIngredients(props) {
+function BurgerIngredients({ ingredients }) {
 
   const [current, setCurrent] = React.useState('one')
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -19,7 +19,7 @@ function BurgerIngredients(props) {
   }
 
   const showIngredient = (id) => {
-    setCurrentIgredient(props.ingredients.find(item => item._id === id));
+    setCurrentIgredient(ingredients.find(item => item._id === id));
     setIsModalOpened(true);
   }
 
@@ -48,11 +48,11 @@ function BurgerIngredients(props) {
         </div>
         <div className={styles.content}>
           <h2 className="text text_type_main-medium">Булки</h2>
-          <BurderIngredientCategory data={props.ingredients.filter(item => item.type === 'bun')} onIndegrientClick={showIngredient} />
+          <BurderIngredientCategory data={ingredients.filter(item => item.type === 'bun')} onIndegrientClick={showIngredient} />
           <h2 className="text text_type_main-medium">Соусы</h2>
-          <BurderIngredientCategory data={props.ingredients.filter(item => item.type === 'sauce')} onIndegrientClick={showIngredient} />
+          <BurderIngredientCategory data={ingredients.filter(item => item.type === 'sauce')} onIndegrientClick={showIngredient} />
           <h2 className="text text_type_main-medium">Начинки</h2>
-          <BurderIngredientCategory data={props.ingredients.filter(item => item.type === 'main')} onIndegrientClick={showIngredient} />
+          <BurderIngredientCategory data={ingredients.filter(item => item.type === 'main')} onIndegrientClick={showIngredient} />
         </div>
       </section>
       {isModalOpened && modal}

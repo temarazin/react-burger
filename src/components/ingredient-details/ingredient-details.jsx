@@ -1,7 +1,7 @@
 import styles from './ingredient-details.module.css';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
-function IngredientDetails(props) {
+function IngredientDetails({ currentIngredient }) {
   const {
     name,
     proteins,
@@ -9,7 +9,7 @@ function IngredientDetails(props) {
     carbohydrates,
     calories,
     image_large
-  } = props.currentIngredient;
+  } = currentIngredient;
   return (
     <div>
       <img src={image_large} alt={name} className={`${styles.image}`} />

@@ -1,11 +1,11 @@
 import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-function ModalOverlay(props) {
+function ModalOverlay({ onClose }) {
 
   function handleClick(e) {
     if (e.target === e.currentTarget) {
-      props.onClose();
+      onClose();
     }
   }
 

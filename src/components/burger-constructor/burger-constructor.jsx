@@ -6,7 +6,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
-function BurgerConstructor(props) {
+function BurgerConstructor({ ingredients }) {
 
   const [isModalOpened, setIsModalOpened] = useState(false);
 

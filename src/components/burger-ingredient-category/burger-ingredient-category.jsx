@@ -2,15 +2,15 @@ import styles from './burger-ingredient-category.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
-function BurderIngredientCategory(props) {
+function BurderIngredientCategory({ data, onIndegrientClick }) {
 
   function clickIndegrient(id) {
-    props.onIndegrientClick(id);
+    onIndegrientClick(id);
   }
 
   return (
     <ul className={`${styles.ingredient__list} pt-6 pr-4 pb-10 pl-4`}>
-      {props.data.map(item => {
+      {data.map(item => {
         return (
           <li className={`${styles.ingredient}`} key={item._id}  onClick={() => clickIndegrient(item._id)}>
             <img src={item.image} alt={item.name} className={`${styles.image} mr-4 mb-1 ml-4`} />

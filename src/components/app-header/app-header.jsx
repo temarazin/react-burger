@@ -2,9 +2,9 @@ import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
-function AppHeader(props) {
+function AppHeader({ className }) {
   return (
-    <header className={`${styles.container} ${props.className || ''} p-4`}>
+    <header className={`${styles.container} ${className || ''} p-4`}>
       <nav className={styles.container__inner}>
           <ul className={`${styles.menu__list}`}>
             <li className={styles.menu__item}>
