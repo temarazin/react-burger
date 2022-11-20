@@ -2,16 +2,16 @@ import styles from './burger-constructor.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import { ADD_BUN, ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/burgerConstructor';
+import { ADD_BUN, ADD_INGREDIENT, REMOVE_INGREDIENT, COUNT_TOTAL_PRICE } from '../../services/actions/burgerConstructor';
 
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
-  const { ingredients } = useSelector(store => store.burgerConstructor);
+  const { ingredients, totalPrice } = useSelector(store => store.burgerConstructor);
 
   const onDropHandler = (item) => {
     if (ingredients[1]?._id === 'placeholder_ingredient') {
@@ -31,7 +31,9 @@ function BurgerConstructor() {
     })
 });
 
-
+  useEffect(() => {
+    dispatch({ type: COUNT_TOTAL_PRICE });
+  }, [dispatch, ingredients]);
 
   const [isModalOpened, setIsModalOpened] = useState(false);
 
@@ -49,18 +51,29 @@ function BurgerConstructor() {
     </Modal>
   )
 
+  const burgerIngredients = ingredients.reduce((acc, item) => {
+    if (!acc.includes(item._id)) {
+      acc.push(item._id);
+    }
+    return acc;
+  }, [])
+
   return (
     <>
       <section className="mt-25" aria-label="Конструктор">
         <ul className={`${styles.constructor} ${isHover && styles.isHover} pr-4 pl-4`} ref={dropTarget}>
-          {ingredients.map((item, i, ar) => (
-            <BurgerConstructorItem
-              item={item}
-              key={item._id}
-              isLocked={i === 0}
-              type={i === 0 ? 'top' : undefined}
-            />
-            )
+          {burgerIngredients.map((id, i, ar) => {
+            const item = ingredients.find(item => item._id === id);
+            return (
+              <BurgerConstructorItem
+                item={item}
+                key={item._id}
+                isLocked={i === 0}
+                type={i === 0 ? 'top' : undefined}
+              />
+              )
+          }
+
           )}
           <BurgerConstructorItem
               item={ingredients[0]}
@@ -70,7 +83,7 @@ function BurgerConstructor() {
             />
         </ul>
         <div className={`${styles['order-submit']} mt-10`}>
-          <p className="text text_type_digits-medium mr-10">3200 <CurrencyIcon type="primary" /></p>
+          <p className="text text_type_digits-medium mr-10">{totalPrice} <CurrencyIcon type="primary" /></p>
           <Button type="primary" htmlType="button" size="large" onClick={showOrder}>
             Оформить заказ
           </Button>
