@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import { ADD_BUN, ADD_INGREDIENT, REMOVE_INGREDIENT, COUNT_TOTAL_PRICE } from '../../services/actions/burgerConstructor';
+import { getOrder } from '../../services/actions/order';
 
 function BurgerConstructor() {
 
@@ -42,6 +43,7 @@ function BurgerConstructor() {
   }
 
   const showOrder = () => {
+    dispatch(getOrder(ingredients.map(item => item._id)));
     setIsModalOpened(true);
   }
 
