@@ -8,7 +8,7 @@ import {
 const initialState = {
   ingredients: [
     {
-      _id: 'placeholder_bun',
+      uuid: 'placeholder_bun',
       type: "true",
       isLocked: true,
       name: "Перенесите сюда булочку",
@@ -17,7 +17,7 @@ const initialState = {
       image: 'https://code.s3.yandex.net/react/code/bun-02.png',
     },
     {
-      _id: 'placeholder_ingredient',
+      uuid: 'placeholder_ingredient',
       name: "Перенесите сюда ингредиенты",
       price: 0,
       qty: 1,
@@ -35,11 +35,9 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ingredients: [...state.ingredients, action.ingredient]
       }
     case REMOVE_INGREDIENT:
-      const index = state.ingredients.findIndex(item => item._id === action.id)
-      state.ingredients.splice(index, 1);
       return {
         ...state,
-        ingredients: [...state.ingredients]
+        ingredients: state.ingredients.filter(item => item.uuid !== action.uuid)
       }
     case ADD_BUN:
       state.ingredients.splice(0, 1, action.ingredient);

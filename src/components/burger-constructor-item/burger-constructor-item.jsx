@@ -9,7 +9,7 @@ function BurgerConstructorItem({ item, isLocked = false, type = undefined }) {
   const name = item.name + (type === 'top' ? ' (верх)' : type === 'bottom' ? ' (низ)' : '');
 
   const handleRemove = () => {
-    dispatch({ type: REMOVE_INGREDIENT, id: item._id });
+    dispatch({ type: REMOVE_INGREDIENT, uuid: item.uuid });
   }
 
   return (

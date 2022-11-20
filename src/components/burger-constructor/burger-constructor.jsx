@@ -8,6 +8,7 @@ import { useDrop } from 'react-dnd';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import { ADD_BUN, ADD_INGREDIENT, REMOVE_INGREDIENT, COUNT_TOTAL_PRICE } from '../../services/actions/burgerConstructor';
 import { getOrder } from '../../services/actions/order';
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor() {
 
@@ -15,9 +16,10 @@ function BurgerConstructor() {
   const { ingredients, totalPrice } = useSelector(store => store.burgerConstructor);
 
   const onDropHandler = (item) => {
-    if (ingredients[1]?._id === 'placeholder_ingredient') {
-      dispatch({ type: REMOVE_INGREDIENT, id: 'placeholder_ingredient' })
+    if (ingredients[1]?.uuid === 'placeholder_ingredient') {
+      dispatch({ type: REMOVE_INGREDIENT, uuid: 'placeholder_ingredient' })
     }
+    item = {...item, uuid: uuidv4()}
     const action = item.type === 'bun' ? ADD_BUN : ADD_INGREDIENT;
     dispatch({ type: action, ingredient: item });
   }
@@ -53,23 +55,22 @@ function BurgerConstructor() {
     </Modal>
   )
 
-  const burgerIngredients = ingredients.reduce((acc, item) => {
-    if (!acc.includes(item._id)) {
-      acc.push(item._id);
-    }
-    return acc;
-  }, [])
+  // const burgerIngredients = ingredients.reduce((acc, item) => {
+  //   if (!acc.includes(item._id)) {
+  //     acc.push(item._id);
+  //   }
+  //   return acc;
+  // }, [])
 
   return (
     <>
       <section className="mt-25" aria-label="Конструктор">
         <ul className={`${styles.constructor} ${isHover && styles.isHover} pr-4 pl-4`} ref={dropTarget}>
-          {burgerIngredients.map((id, i, ar) => {
-            const item = ingredients.find(item => item._id === id);
+          {ingredients.map((item, i) => {
             return (
               <BurgerConstructorItem
                 item={item}
-                key={item._id}
+                key={item.uuid}
                 isLocked={i === 0}
                 type={i === 0 ? 'top' : undefined}
               />
