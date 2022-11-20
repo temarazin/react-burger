@@ -2,7 +2,6 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
-  SET_CURRENT_INGREDIENT,
 } from "../actions/ingredients";
 
 const initialState = {
@@ -31,11 +30,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         request: false,
         requestFailed: true,
-      }
-    case SET_CURRENT_INGREDIENT:
-      return {
-        ...state,
-        currentIngredient: action.ingredient
       }
     default:
       return state

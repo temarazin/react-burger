@@ -5,7 +5,8 @@ import BurderIngredientCategory from '../burger-ingredient-category/burger-ingre
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients, SET_CURRENT_INGREDIENT } from '../../services/actions/ingredients';
+import { getIngredients } from '../../services/actions/ingredients';
+import { SET_CURRENT_INGREDIENT } from '../../services/actions/ingredientDetail';
 
 function BurgerIngredients() {
   const dispatch = useDispatch();
@@ -14,7 +15,8 @@ function BurgerIngredients() {
   const catSauce = useRef();
   const catMain = useRef();
 
-  const { ingredients, currentIngredient } = useSelector(store => store.ingredients);
+  const { ingredients } = useSelector(store => store.ingredients);
+  const { currentIngredient } = useSelector(store => store.ingredientDetail)
 
   function onTabClickHandler(tab) {
     setCurrent(tab);

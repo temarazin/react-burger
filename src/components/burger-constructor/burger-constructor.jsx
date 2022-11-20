@@ -14,6 +14,8 @@ function BurgerConstructor() {
 
   const dispatch = useDispatch();
   const { ingredients, totalPrice } = useSelector(store => store.burgerConstructor);
+  const [ canOrder, setCanOrder ] = useState(false);
+  const { order } = useSelector(store => store.order.order);
 
   const onDropHandler = (item) => {
     if (ingredients[1]?.uuid === 'placeholder_ingredient') {
@@ -22,6 +24,9 @@ function BurgerConstructor() {
     item = {...item, uuid: uuidv4()}
     const action = item.type === 'bun' ? ADD_BUN : ADD_INGREDIENT;
     dispatch({ type: action, ingredient: item });
+    if (item.type === 'bun') {
+      setCanOrder(true);
+    }
   }
 
   const [{isHover}, dropTarget] = useDrop({
@@ -38,15 +43,23 @@ function BurgerConstructor() {
     dispatch({ type: COUNT_TOTAL_PRICE });
   }, [dispatch, ingredients]);
 
+  useEffect(() => {
+    if (order.number > 0) {
+      setIsModalOpened(true);
+    }
+  }, [order.number])
+
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const closeModal = () => {
     setIsModalOpened(false);
   }
 
-  const showOrder = () => {
+  const createOrder = () => {
+    const orderAr = ingredients.map(item => item._id);
+    orderAr.push(orderAr[0]);
+    console.log(orderAr);
     dispatch(getOrder(ingredients.map(item => item._id)));
-    setIsModalOpened(true);
   }
 
   const modal = (
@@ -80,7 +93,7 @@ function BurgerConstructor() {
         </ul>
         <div className={`${styles['order-submit']} mt-10`}>
           <p className="text text_type_digits-medium mr-10">{totalPrice} <CurrencyIcon type="primary" /></p>
-          <Button type="primary" htmlType="button" size="large" onClick={showOrder}>
+          <Button type="primary" htmlType="button" size="large" onClick={createOrder} disabled={!canOrder}>
             Оформить заказ
           </Button>
         </div>

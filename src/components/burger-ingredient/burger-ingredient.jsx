@@ -7,7 +7,10 @@ import { useSelector } from 'react-redux';
 
 function BurderIngredient({ item, onIndegrientClick }) {
   const { ingredients } = useSelector(store => store.burgerConstructor);
-  const count = ingredients.filter(ingred => ingred._id === item._id).length;
+  let count = ingredients.filter(ingred => ingred._id === item._id).length;
+  if (item.type === 'bun') {
+    count *= 2;
+  }
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
