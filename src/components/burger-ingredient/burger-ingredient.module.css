@@ -1,0 +1,38 @@
+.ingredient {
+  position: relative;
+  cursor: pointer;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.name {
+  text-align: center;
+  min-height: 48px;
+}
+
+.counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.image {
+  max-width: 100%;
+  height: 120px;
+  object-fit: contain;
+  object-position: center;
+  transition: 0.3s;
+}
+
+.ingredient:hover .image {
+  transform: rotate(10deg);
+}
+
+.isDragging {
+  outline: 2px solid #6237df;
+}

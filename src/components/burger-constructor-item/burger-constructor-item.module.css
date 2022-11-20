@@ -1,0 +1,8 @@
+.constructor__item {
+  display: flex;
+  align-items: center;
+}
+
+.icon-wrapper {
+  flex: 0 0 24px;
+}

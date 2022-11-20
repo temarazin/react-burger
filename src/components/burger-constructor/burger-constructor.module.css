@@ -26,14 +26,10 @@
   background: #2f2f37;
 }
 
-
-.constructor__item {
-  display: flex;
-  align-items: center;
-}
-
-.icon-wrapper {
-  flex: 0 0 24px;
+.isHover {
+  outline: 2px dashed #6237df;
+  opacity: 0.6;
+  border-radius: 10px;
 }
 
 .order-submit {
