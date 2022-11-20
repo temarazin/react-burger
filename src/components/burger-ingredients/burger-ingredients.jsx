@@ -1,27 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurderIngredientCategory from '../burger-ingredient-category/burger-ingredient-category';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients, SET_CURRENT_INGREDIENT } from '../../services/actions/ingredients';
 
-function BurgerIngredients({ ingredients }) {
+function BurgerIngredients() {
+  const dispatch = useDispatch();
+
+  const { ingredients, currentIngredient } = useSelector(store => store.ingredients);
 
   const [current, setCurrent] = React.useState('one')
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [currentIngredient, setCurrentIgredient] = useState({});
 
   const closeModal = () => {
     setIsModalOpened(false);
+    dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: null })
   }
 
   const showIngredient = (id) => {
-    setCurrentIgredient(ingredients.find(item => item._id === id));
+    dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: ingredients.find(item => item._id === id) })
     setIsModalOpened(true);
   }
+
+  useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch]);
 
   const modal = (
     <Modal title="Детали ингредиента" onClose={closeModal}>
@@ -58,10 +64,6 @@ function BurgerIngredients({ ingredients }) {
       {isModalOpened && modal}
     </>
   );
-}
-BurgerIngredients.defaultProps = {ingredients: []};
-BurgerIngredients.propType = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes()).isRequired,
 }
 
 export default BurgerIngredients;
