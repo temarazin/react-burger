@@ -8,17 +8,23 @@ export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 export function getIngredients() {
   return function (dispatch) {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
-    api.getIngredients().then((res) => {
-      if (res && res.success) {
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          ingredients: res.data,
-        });
-      } else {
+    api.getIngredients()
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: GET_INGREDIENTS_SUCCESS,
+            ingredients: res.data,
+          });
+        } else {
+          dispatch({
+            type: GET_INGREDIENTS_FAILED,
+          });
+        }
+      })
+      .catch(() => {
         dispatch({
           type: GET_INGREDIENTS_FAILED,
         });
-      }
-    });
+      });
   };
 }

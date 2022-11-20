@@ -7,19 +7,25 @@ export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export function getOrder(ingredientIds) {
   return function (dispatch) {
     dispatch({ type: GET_ORDER_REQUEST });
-    api.createOrder(ingredientIds).then((res) => {
-      if (res && res.success) {
-        console.log(res);
-        const {name, order} = res
-        dispatch({
-          type: GET_ORDER_SUCCESS,
-          order: { name, order },
-        });
-      } else {
+    api.createOrder(ingredientIds)
+      .then((res) => {
+        if (res && res.success) {
+          console.log(res);
+          const {name, order} = res
+          dispatch({
+            type: GET_ORDER_SUCCESS,
+            order: { name, order },
+          });
+        } else {
+          dispatch({
+            type: GET_ORDER_FAILED,
+          });
+        }
+      })
+      .catch(() => {
         dispatch({
           type: GET_ORDER_FAILED,
         });
-      }
-    });
+      });
   };
 }
