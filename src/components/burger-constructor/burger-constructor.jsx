@@ -58,7 +58,6 @@ function BurgerConstructor() {
   const createOrder = () => {
     const orderAr = ingredients.map(item => item._id);
     orderAr.push(orderAr[0]);
-    console.log(orderAr);
     dispatch(getOrder(ingredients.map(item => item._id)));
   }
 

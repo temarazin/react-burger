@@ -10,7 +10,6 @@ export function getOrder(ingredientIds) {
     api.createOrder(ingredientIds)
       .then((res) => {
         if (res && res.success) {
-          console.log(res);
           const {name, order} = res
           dispatch({
             type: GET_ORDER_SUCCESS,
