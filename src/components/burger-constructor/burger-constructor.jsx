@@ -55,13 +55,6 @@ function BurgerConstructor() {
     </Modal>
   )
 
-  // const burgerIngredients = ingredients.reduce((acc, item) => {
-  //   if (!acc.includes(item._id)) {
-  //     acc.push(item._id);
-  //   }
-  //   return acc;
-  // }, [])
-
   return (
     <>
       <section className="mt-25" aria-label="Конструктор">

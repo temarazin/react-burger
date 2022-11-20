@@ -55,7 +55,7 @@ function BurgerIngredients() {
     }
   }
 
-  const [current, setCurrent] = React.useState('one')
+  const [current, setCurrent] = React.useState('bun')
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const closeModal = () => {

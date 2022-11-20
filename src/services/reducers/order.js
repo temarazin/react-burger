@@ -9,7 +9,9 @@ const initialState = {
   requestFailed: false,
   order: {
     name: '',
-    order: {}
+    order: {
+      number: null
+    }
   }
 }
 
