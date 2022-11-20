@@ -1,4 +1,5 @@
 import styles from './burger-ingredient-category.module.css';
+import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import BurderIngredient from '../burger-ingredient/burger-ingredient';
 
@@ -16,7 +17,8 @@ function BurderIngredientCategory({ data, onIndegrientClick }) {
   )
 }
 BurderIngredientCategory.propType ={
-  currentIngredient: ingredientPropTypes().isRequired,
+  data: PropTypes.arrayOf(ingredientPropTypes()).isRequired,
+  onIndegrientClick: PropTypes.func.isRequired
 }
 
 export default BurderIngredientCategory;

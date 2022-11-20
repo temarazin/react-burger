@@ -1,5 +1,7 @@
 import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/prop-types';
 import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../services/actions/burgerConstructor';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
@@ -59,6 +61,11 @@ function BurgerConstructorItem({ item, isLocked = false, type = undefined }) {
       </div>
     </li>
   )
+}
+BurgerConstructorItem.propType ={
+  item: ingredientPropTypes().isRequired,
+  isLocked: PropTypes.bool,
+  type: PropTypes.string
 }
 
 export default BurgerConstructorItem;
