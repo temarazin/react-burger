@@ -1,12 +1,53 @@
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
+import { ADD_BUN, ADD_INGREDIENT, REMOVE_INGREDIENT, COUNT_TOTAL_PRICE } from '../../services/actions/burgerConstructor';
+import { getOrder } from '../../services/actions/order';
+import { v4 as uuidv4 } from 'uuid';
 
-function BurgerConstructor({ ingredients }) {
+function BurgerConstructor() {
+
+  const dispatch = useDispatch();
+  const { ingredients, totalPrice } = useSelector(store => store.burgerConstructor);
+  const [ canOrder, setCanOrder ] = useState(false);
+  const { order } = useSelector(store => store.order.order);
+
+  const onDropHandler = (item) => {
+    if (ingredients[1]?.uuid === 'placeholder_ingredient') {
+      dispatch({ type: REMOVE_INGREDIENT, uuid: 'placeholder_ingredient' })
+    }
+    item = {...item, uuid: uuidv4()}
+    const action = item.type === 'bun' ? ADD_BUN : ADD_INGREDIENT;
+    dispatch({ type: action, ingredient: item });
+    if (item.type === 'bun') {
+      setCanOrder(true);
+    }
+  }
+
+  const [{isHover}, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+        onDropHandler(item);
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+});
+
+  useEffect(() => {
+    dispatch({ type: COUNT_TOTAL_PRICE });
+  }, [dispatch, ingredients]);
+
+  useEffect(() => {
+    if (order.number > 0) {
+      setIsModalOpened(true);
+    }
+  }, [order.number])
 
   const [isModalOpened, setIsModalOpened] = useState(false);
 
@@ -14,8 +55,10 @@ function BurgerConstructor({ ingredients }) {
     setIsModalOpened(false);
   }
 
-  const showOrder = () => {
-    setIsModalOpened(true);
+  const createOrder = () => {
+    const orderAr = ingredients.map(item => item._id);
+    orderAr.push(orderAr[0]);
+    dispatch(getOrder(ingredients.map(item => item._id)));
   }
 
   const modal = (
@@ -27,81 +70,29 @@ function BurgerConstructor({ ingredients }) {
   return (
     <>
       <section className="mt-25" aria-label="Конструктор">
-        <ul className={`${styles.constructor} pr-4 pl-4`}>
-          <li className={`${styles.constructor__item}`}>
-            <span className={`${styles['icon-wrapper']} pr-2`}></span>
-            <ConstructorElement
-              type="top"
+        <ul className={`${styles.constructor} ${isHover && styles.isHover} pr-4 pl-4`} ref={dropTarget}>
+          {ingredients.map((item, i) => {
+            return (
+              <BurgerConstructorItem
+                item={item}
+                key={item.uuid}
+                isLocked={i === 0}
+                type={i === 0 ? 'top' : undefined}
+              />
+              )
+          }
+
+          )}
+          <BurgerConstructorItem
+              item={ingredients[0]}
+              key={'bottom-bun'}
               isLocked={true}
-              text="Краторная булка N-200i (верх)"
-              price={200}
-              thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-            />
-          </li>
-          <li className={`${styles.constructor__item}`}>
-            <span className={`${styles['icon-wrapper']} pr-2`}>
-              <DragIcon type="primary" />
-            </span>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-            />
-          </li>
-          <li className={`${styles.constructor__item}`}>
-            <span className={`${styles['icon-wrapper']} pr-2`}>
-              <DragIcon type="primary" />
-            </span>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-            />
-          </li>
-          <li className={`${styles.constructor__item}`}>
-            <span className={`${styles['icon-wrapper']} pr-2`}>
-              <DragIcon type="primary" />
-            </span>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-            />
-          </li>
-          <li className={`${styles.constructor__item}`}>
-            <span className={`${styles['icon-wrapper']} pr-2`}>
-              <DragIcon type="primary" />
-            </span>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-            />
-          </li>
-          <li className={`${styles.constructor__item}`}>
-            <span className={`${styles['icon-wrapper']} pr-2`}>
-              <DragIcon type="primary" />
-            </span>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-            />
-          </li>
-          <li className={`${styles.constructor__item}`}>
-            <span className={`${styles['icon-wrapper']} pr-2`}></span>
-            <ConstructorElement
               type="bottom"
-              isLocked={true}
-              text="Краторная булка N-200i (низ)"
-              price={200}
-              thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
             />
-          </li>
         </ul>
         <div className={`${styles['order-submit']} mt-10`}>
-          <p className="text text_type_digits-medium mr-10">3200 <CurrencyIcon type="primary" /></p>
-          <Button type="primary" htmlType="button" size="large" onClick={showOrder}>
+          <p className="text text_type_digits-medium mr-10">{totalPrice} <CurrencyIcon type="primary" /></p>
+          <Button type="primary" htmlType="button" size="large" onClick={createOrder} disabled={!canOrder}>
             Оформить заказ
           </Button>
         </div>
@@ -109,9 +100,6 @@ function BurgerConstructor({ ingredients }) {
       {isModalOpened && modal}
     </>
   )
-}
-BurgerConstructor.propType = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes()).isRequired,
 }
 
 export default BurgerConstructor;

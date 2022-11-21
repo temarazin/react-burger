@@ -20,6 +20,20 @@ class Api {
       return this._checkResponse(res);
     }).catch(e => console.log(e));
   }
+
+  createOrder(ingredientIds) {
+    return fetch(`${this._baseUrl}/orders`, {
+      headers: this._headers,
+      method: 'POST',
+      body: JSON.stringify({
+        ingredients: ingredientIds
+      })
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
 }
 
 const api = new Api({

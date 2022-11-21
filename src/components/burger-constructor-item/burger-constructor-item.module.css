@@ -1,0 +1,27 @@
+.constructor__item {
+  display: flex;
+  align-items: center;
+}
+
+.icon-wrapper {
+  flex: 0 0 24px;
+}
+
+.isDrag {
+  outline: 2px dashed #6237df;
+}
+
+.isHover {
+  position: relative;
+}
+
+.isHover::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border: 2px dotted #fff;
+  top: calc(100% + 3px);
+  height: 6px;
+}
