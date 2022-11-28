@@ -6,9 +6,14 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
-import { SET_CURRENT_INGREDIENT } from '../../services/actions/ingredientDetail';
+import { ingredientDetailActions } from '../../services/actionCreators/ingredientDetail'
 
 function BurgerIngredients() {
+
+  const {
+    setCurrentIngredient,
+    unsetCurrentIngredient
+  } = ingredientDetailActions;
   const dispatch = useDispatch();
 
   const catBun = useRef();
@@ -62,11 +67,11 @@ function BurgerIngredients() {
 
   const closeModal = () => {
     setIsModalOpened(false);
-    dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: null })
+    dispatch(unsetCurrentIngredient());
   }
 
   const showIngredient = (id) => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: ingredients.find(item => item._id === id) })
+    dispatch(setCurrentIngredient(ingredients.find(item => item._id === id)))
     setIsModalOpened(true);
   }
 

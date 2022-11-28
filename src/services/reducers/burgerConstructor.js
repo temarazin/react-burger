@@ -31,17 +31,17 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     case ADD_INGREDIENT:
       return {
         ...state,
-        ingredients: [...state.ingredients, action.ingredient]
+        ingredients: [...state.ingredients, action.payload.ingredient]
       }
     case REMOVE_INGREDIENT:
       return {
         ...state,
-        ingredients: state.ingredients.filter(item => item.uuid !== action.uuid)
+        ingredients: state.ingredients.filter(item => item.uuid !== action.payload.uuid)
       }
     case ADD_BUN:
       // state.ingredients.splice(0, 1, action.ingredient);
       const copyAr = state.ingredients.slice(0);
-      copyAr[0] = action.ingredient;
+      copyAr[0] = action.payload.ingredient;
       return {
         ...state,
         ingredients: copyAr
@@ -59,9 +59,9 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       }
     case MOVE_INGREDIENT: {
         const copyAr = state.ingredients.slice(0);
-        const itemIndex = copyAr.findIndex(item => item.uuid === action.itemUuid);
+        const itemIndex = copyAr.findIndex(item => item.uuid === action.payload.itemUuid);
         const item = copyAr.splice(itemIndex, 1)[0];
-        const pasteAfterIndex = copyAr.findIndex(item => item.uuid === action.pasteAfterItemUuid);
+        const pasteAfterIndex = copyAr.findIndex(item => item.uuid === action.payload.pasteAfterItemUuid);
         copyAr.splice(pasteAfterIndex + 1, 0, item);
       return {
         ...state,

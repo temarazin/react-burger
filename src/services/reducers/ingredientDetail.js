@@ -1,5 +1,6 @@
 import {
   SET_CURRENT_INGREDIENT,
+  UNSET_CURRENT_INGREDIENT
 } from "../actions/ingredientDetail";
 
 const initialState = {
@@ -11,7 +12,12 @@ export const ingredientDetailReducer = (state = initialState, action) => {
     case SET_CURRENT_INGREDIENT:
       return {
         ...state,
-        currentIngredient: action.ingredient
+        currentIngredient: action.payload.ingredient
+      }
+    case UNSET_CURRENT_INGREDIENT:
+      return {
+        ...state,
+        currentIngredient: null
       }
     default:
       return state

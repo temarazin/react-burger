@@ -6,26 +6,34 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import { ADD_BUN, ADD_INGREDIENT, REMOVE_INGREDIENT, COUNT_TOTAL_PRICE } from '../../services/actions/burgerConstructor';
+import { COUNT_TOTAL_PRICE } from '../../services/actions/burgerConstructor';
+import { burgerConstructorActions } from '../../services/actionCreators/burgerConstructor';
 import { getOrder } from '../../services/actions/order';
 import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor() {
 
+  const {
+    addIngredient,
+    removeIngredient,
+    addBun
+  } = burgerConstructorActions;
   const dispatch = useDispatch();
+
   const { ingredients, totalPrice } = useSelector(store => store.burgerConstructor);
   const [ canOrder, setCanOrder ] = useState(false);
   const { order } = useSelector(store => store.order.order);
 
   const onDropHandler = (item) => {
     if (ingredients[1]?.uuid === 'placeholder_ingredient') {
-      dispatch({ type: REMOVE_INGREDIENT, uuid: 'placeholder_ingredient' })
+      dispatch(removeIngredient('placeholder_ingredient'))
     }
     item = {...item, uuid: uuidv4()}
-    const action = item.type === 'bun' ? ADD_BUN : ADD_INGREDIENT;
-    dispatch({ type: action, ingredient: item });
     if (item.type === 'bun') {
+      dispatch(addBun(item));
       setCanOrder(true);
+    } else {
+      dispatch(addIngredient(item));
     }
   }
 
