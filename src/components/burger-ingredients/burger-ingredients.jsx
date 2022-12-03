@@ -63,16 +63,13 @@ function BurgerIngredients() {
   }
 
   const [current, setCurrent] = React.useState('bun')
-  const [isModalOpened, setIsModalOpened] = useState(false);
 
-  const closeModal = () => {
-    setIsModalOpened(false);
+  const hideIngredient = () => {
     dispatch(unsetCurrentIngredient());
   }
 
   const showIngredient = (id) => {
     dispatch(setCurrentIngredient(ingredients.find(item => item._id === id)))
-    setIsModalOpened(true);
   }
 
   useEffect(() => {
@@ -80,7 +77,7 @@ function BurgerIngredients() {
   }, [dispatch]);
 
   const modal = (
-    <Modal title="Детали ингредиента" onClose={closeModal}>
+    <Modal title="Детали ингредиента" onClose={hideIngredient}>
       <IngredientDetails currentIngredient={currentIngredient} />
     </Modal>
   )
@@ -111,7 +108,7 @@ function BurgerIngredients() {
           <BurderIngredientCategory data={ingredients.filter(item => item.type === 'main')} onIndegrientClick={showIngredient} />
         </div>
       </section>
-      {isModalOpened && modal}
+      {currentIngredient !== null && modal}
     </>
   );
 }

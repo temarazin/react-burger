@@ -2,7 +2,6 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   ADD_BUN,
-  COUNT_TOTAL_PRICE,
   MOVE_INGREDIENT
 } from '../actions/burgerConstructor';
 
@@ -23,7 +22,6 @@ const initialState = {
       image: 'https://code.s3.yandex.net/react/code/meat-03.png',
     },
   ],
-  totalPrice: 0,
 }
 
 export const burgerConstructorReducer = (state = initialState, action) => {
@@ -45,17 +43,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredients: copyAr
-      }
-    case COUNT_TOTAL_PRICE:
-      return {
-        ...state,
-        totalPrice: state.ingredients.reduce((sum, item) => {
-          let price = item.price;
-          if (item.type === 'bun') {
-            price *= 2;
-          }
-          return sum += price;
-        }, 0)
       }
     case MOVE_INGREDIENT: {
         const copyAr = state.ingredients.slice(0);

@@ -2,7 +2,6 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   ADD_BUN,
-  COUNT_TOTAL_PRICE,
   MOVE_INGREDIENT,
 } from "../actions/burgerConstructor";
 

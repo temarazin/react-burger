@@ -2,11 +2,10 @@ import styles from './burger-constructor.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import { COUNT_TOTAL_PRICE } from '../../services/actions/burgerConstructor';
 import { burgerConstructorActions } from '../../services/actionCreators/burgerConstructor';
 import { getOrder } from '../../services/actions/order';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,7 +19,7 @@ function BurgerConstructor() {
   } = burgerConstructorActions;
   const dispatch = useDispatch();
 
-  const { ingredients, totalPrice } = useSelector(store => store.burgerConstructor);
+  const { ingredients } = useSelector(store => store.burgerConstructor);
   const [ canOrder, setCanOrder ] = useState(false);
   const { order } = useSelector(store => store.order.order);
 
@@ -45,11 +44,15 @@ function BurgerConstructor() {
     collect: monitor => ({
       isHover: monitor.isOver(),
     })
-});
+  });
 
-  useEffect(() => {
-    dispatch({ type: COUNT_TOTAL_PRICE });
-  }, [dispatch, ingredients]);
+  const totalPrice = useMemo(() => ingredients.reduce((sum, item) => {
+    let price = item.price;
+    if (item.type === 'bun') {
+      price *= 2;
+    }
+    return sum += price;
+  }, 0), [ingredients]);
 
   useEffect(() => {
     if (order.number > 0) {

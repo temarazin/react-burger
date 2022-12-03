@@ -2,12 +2,17 @@ import styles from './burger-ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
+import { useMemo } from 'react';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 
 function BurderIngredient({ item, onIndegrientClick }) {
   const { ingredients } = useSelector(store => store.burgerConstructor);
-  let count = ingredients.filter(ingred => ingred._id === item._id).length;
+
+  let count = useMemo(
+    () => ingredients.filter(ingred => ingred._id === item._id).length,
+    [ingredients, item]
+  );
   if (item.type === 'bun') {
     count *= 2;
   }
@@ -20,8 +25,12 @@ function BurderIngredient({ item, onIndegrientClick }) {
     })
   })
 
+  const handleIngredientClick = () => {
+    onIndegrientClick(item._id);
+  }
+
   return (
-    <li className={`${styles.ingredient} ${isDrag && styles.isDragging}`} key={item._id}  onClick={() => onIndegrientClick(item._id)}>
+    <li className={`${styles.ingredient} ${isDrag && styles.isDragging}`} key={item._id}  onClick={handleIngredientClick}>
       <img src={item.image} alt={item.name} className={`${styles.image} mr-4 mb-1 ml-4`} ref={dragRef} />
       {count > 0 && <Counter count={count} size="default" extraClass={styles.counter} />}
       <p className={`${styles.price} text text_type_digits-default mb-1`}>{item.price} <CurrencyIcon type="primary" /></p>
