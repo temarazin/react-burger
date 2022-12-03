@@ -1,19 +1,40 @@
 import styles from './burger-ingredient-category.module.css';
 import PropTypes from 'prop-types';
+import { useInView } from 'react-intersection-observer';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import BurderIngredient from '../burger-ingredient/burger-ingredient';
 
-function BurderIngredientCategory({ data, onIndegrientClick }) {
+function BurderIngredientCategory({ data, cat, current, root, onSetCurrent, onIndegrientClick }) {
 
+  const { type, name } = cat;
+
+  const { ref } = useInView({
+    root,
+    threshold: 0.2,
+    onChange: (inView) => {
+      if (inView) {
+        onSetCurrent([...current, type])
+      } else {
+        onSetCurrent(current.filter(item => item !== type))
+      }
+    },
+  });
 
   return (
-    <ul className={`${styles.ingredient__list} pt-6 pr-4 pb-10 pl-4`}>
-      {data.map(item => {
-        return (
-          <BurderIngredient className={`${styles.ingredient}`} key={item._id} item={item}  onIndegrientClick={onIndegrientClick} />
-        )
-      })}
-    </ul>
+    <>
+    <h2 className="text text_type_main-medium">{name}</h2>
+      <ul className={`${styles.ingredient__list} pt-6 pr-4 pb-10 pl-4`} ref={ref}>
+        {data.map(item => {
+          return (
+            <BurderIngredient
+              className={`${styles.ingredient}`}
+              key={item._id}
+              item={item}
+              onIndegrientClick={onIndegrientClick} />
+          )
+        })}
+      </ul>
+    </>
   )
 }
 BurderIngredientCategory.propType ={
