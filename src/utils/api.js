@@ -34,6 +34,35 @@ class Api {
     })
     .catch(e => console.log(e))
   }
+
+  resetPassword(email) {
+    return fetch(`${this._baseUrl}/password-reset`, {
+      headers: this._headers,
+      method: 'POST',
+      body: JSON.stringify({
+        email
+      })
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
+
+  setNewPassword(password, token) {
+    return fetch(`${this._baseUrl}/password-reset`, {
+      headers: this._headers,
+      method: 'POST',
+      body: JSON.stringify({
+        password,
+        token
+      })
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
 }
 
 const api = new Api({
