@@ -2,13 +2,26 @@ import '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import { Switch, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../services/actions/user';
+import { getAccessToken, getRefreshToken } from '../../utils/utils';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Register from '../../pages/register/register';
 import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import ResetPassword from '../../pages/reset-password/reset-password';
+import Profile from '../../pages/profile/profile';
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (getAccessToken() || getRefreshToken()) {
+      dispatch(getUser())
+    }
+  }, [])
 
   return (
     <>
@@ -30,6 +43,9 @@ function App() {
             </Route>
             <Route path="/reset-password" exact>
               <ResetPassword />
+            </Route>
+            <Route path="/profile" exact>
+              <Profile />
             </Route>
           </Switch>
         </main>

@@ -1,5 +1,6 @@
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function AppHeader({ className }) {
@@ -23,10 +24,10 @@ function AppHeader({ className }) {
         <Logo></Logo>
           <ul className={`${styles.menu__list} ${styles.menu__list_secondary}`}>
             <li className={styles.menu__item}>
-              <a href="/" className={`${styles.menu__button} p-5`}>
+              <NavLink to="/profile" className={`${styles.menu__button} p-5`}>
                 <ProfileIcon type="secondary" />
                 <span className="text text_type_main-default ml-2">Личный кабинет</span>
-              </a>
+              </NavLink>
             </li>
           </ul>
       </nav>

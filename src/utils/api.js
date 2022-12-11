@@ -63,6 +63,75 @@ class Api {
     })
     .catch(e => console.log(e))
   }
+
+  registerUser(email, password, name) {
+    return fetch(`${this._baseUrl}/auth/register`, {
+      headers: this._headers,
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+        name
+      })
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
+
+  login(email, password) {
+    return fetch(`${this._baseUrl}/auth/login`, {
+      headers: this._headers,
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+      })
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
+
+  logout(token) {
+    return fetch(`${this._baseUrl}/auth/logout`, {
+      headers: this._headers,
+      method: 'POST',
+      body: JSON.stringify({ token }),
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
+
+  refreshToken(token) {
+    return fetch(`${this._baseUrl}/auth/token`, {
+      headers: this._headers,
+      method: 'POST',
+      body: JSON.stringify({ token }),
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
+
+  getUser(token) {
+    return fetch(`${this._baseUrl}/auth/user`, {
+      headers: {
+        ...this._headers,
+        authorization: token,
+      },
+      method: 'GET',
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
 }
 
 const api = new Api({
