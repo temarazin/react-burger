@@ -15,6 +15,7 @@ import ResetPassword from '../../pages/reset-password/reset-password';
 import Profile from '../../pages/profile/profile';
 import Orders from '../../pages/profile/orders/orders';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import Page404 from '../../pages/page-404/page-404';
 import Modal from '../modal/modal';
 
 function App() {
@@ -63,6 +64,9 @@ function App() {
             </ProtectedRoute>
             <Route path="/ingredients/:ingredientId" exact>
               <IngredientDetails />
+            </Route>
+            <Route path="*">
+              <Page404 />
             </Route>
           </Switch>
 

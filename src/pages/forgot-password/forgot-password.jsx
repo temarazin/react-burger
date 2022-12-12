@@ -3,6 +3,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { Link } from 'react-router-dom';
 import api from '../../utils/api';
 import { useState } from 'react';
+import { setCookie } from '../../utils/cookie';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -14,6 +15,9 @@ function ForgotPassword() {
     api.resetPassword(email)
       .then((res) => {
         if (res.success) {
+          setCookie('passwordReset', 'Y', {
+            'max-age': 2*60*60
+          })
           setIsReset(true);
         } else {
           setError(res.message);

@@ -18,3 +18,8 @@
 .navlink:hover {
   color: #fff;
 }
+
+.selected {
+  color: #fff;
+  pointer-events: none;
+}

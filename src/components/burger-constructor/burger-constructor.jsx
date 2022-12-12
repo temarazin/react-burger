@@ -5,6 +5,7 @@ import OrderDetails from '../order-details/order-details';
 import { useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useHistory } from 'react-router-dom';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import { burgerConstructorActions } from '../../services/actionCreators/burgerConstructor';
 import { getOrder } from '../../services/actions/order';
@@ -19,7 +20,10 @@ function BurgerConstructor() {
   } = burgerConstructorActions;
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const { ingredients } = useSelector(store => store.burgerConstructor);
+  const { isAuth } = useSelector(store => store.user);
   const [ canOrder, setCanOrder ] = useState(false);
   const { order } = useSelector(store => store.order.order);
 
@@ -30,7 +34,6 @@ function BurgerConstructor() {
     item = {...item, uuid: uuidv4()}
     if (item.type === 'bun') {
       dispatch(addBun(item));
-      setCanOrder(true);
     } else {
       dispatch(addIngredient(item));
     }
@@ -55,6 +58,14 @@ function BurgerConstructor() {
   }, 0), [ingredients]);
 
   useEffect(() => {
+    if (ingredients[0]?.uuid === 'placeholder_bun') {
+      setCanOrder(false);
+    } else {
+      setCanOrder(true);
+    }
+  }, [ingredients])
+
+  useEffect(() => {
     if (order.number > 0) {
       setIsModalOpened(true);
     }
@@ -67,6 +78,10 @@ function BurgerConstructor() {
   }
 
   const createOrder = () => {
+    if (!isAuth) {
+      history.push("/login");
+      return;
+    }
     const orderAr = ingredients.map(item => item._id);
     orderAr.push(orderAr[0]);
     dispatch(getOrder(ingredients.map(item => item._id)));
