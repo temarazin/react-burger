@@ -1,29 +1,42 @@
 import styles from './profile.module.css';
-import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { logout } from '../../services/actions/user';
+import { logout, updateUser } from '../../services/actions/user';
 
 function Profile() {
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const { user } = useSelector(store => store.user);
+  const [password, setPassword] = useState('');
+  const [isEditForm, setIsEditForm] = useState(false);
 
-  const [pwd, setPwd] = useState('password');
-  const onChange = e => {
-    setPwd(e.target.value)
-  }
+  const { user, request } = useSelector(store => store.user);
 
   useEffect(() => {
     setName(user.name);
     setEmail(user.email);
   }, [user]);
 
+  useEffect(() => {
+      setIsEditForm(name !== user.name || email !== user.email || password !== '');
+  }, [name, email, user, password])
+
   const logoutHandler = () => {
     dispatch(logout());
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(email, name, password))
+  }
+
+  const cancelHandler = () => {
+    setName(user.name);
+    setEmail(user.email);
+    setPassword('');
   }
 
   return (
@@ -51,29 +64,41 @@ function Profile() {
         <p className="text text_type_main-default text_color_inactive mt-20">В этом разделе вы можете изменить свои персональные данные</p>
       </div>
       <div className={styles['form-wrapper']}>
-        <form className={styles.form}>
-          <Input
-            placeholder="Имя"
-            type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            icon="EditIcon"
-          />
-          <Input
-            placeholder="Логин"
-            type="text"
-            extraClass="mt-6"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            icon="EditIcon"
-          />
-          <PasswordInput
-            name={'password'}
-            extraClass="mt-6"
-            icon="EditIcon"
-            value={pwd}
-            onChange={e => setPwd(e.target.value)}
-          />
+        <form onSubmit={submitHandler}>
+          <fieldset className={styles.form} disabled={request}>
+            <Input
+              placeholder="Имя"
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              icon="EditIcon"
+            />
+            <Input
+              placeholder="Логин"
+              type="text"
+              extraClass="mt-6"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              icon="EditIcon"
+            />
+            <PasswordInput
+              name={'password'}
+              extraClass="mt-6"
+              icon="EditIcon"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+            {isEditForm && (
+              <div className={styles['form-buttons']}>
+                <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">
+                  Сохранить
+                </Button>
+                <Button htmlType="button" type="secondary" size="medium" extraClass="mt-6" onClick={cancelHandler}>
+                  Отменить
+                </Button>
+              </div>
+            )}
+          </fieldset>
         </form>
       </div>
     </div>

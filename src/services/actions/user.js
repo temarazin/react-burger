@@ -138,3 +138,55 @@ export function getUser() {
     }
   };
 }
+
+export function updateUser(email, name, password) {
+  return async function (dispatch) {
+    dispatch({ type: START_REQUEST });
+    let aToken = getAccessToken();
+    let rToken = getRefreshToken();
+    let isTokenRefreshed = false;
+    if (!aToken && !rToken) {
+      dispatch({type: UPDATE_USER_FAILED});
+      return;
+    }
+    if (!aToken) {
+      try {
+        console.log('test');
+        await refreshToken();
+        aToken = getAccessToken();
+        isTokenRefreshed = true;
+      } catch(e) {
+        console.log(e);
+        dispatch({type: UPDATE_USER_FAILED});
+        return;
+      }
+    }
+
+    let userResponse;
+    let userData = {
+      email, name, password
+    }
+    try {
+      userResponse = await api.updateUser(aToken, userData);
+      if (!userResponse?.success && !isTokenRefreshed) {
+        await refreshToken();
+        aToken = getAccessToken();
+        userResponse = await api.updateUser(aToken, userData);
+      }
+    } catch(e) {
+      console.log(e);
+      dispatch({type: UPDATE_USER_FAILED});
+    }
+
+    if (userResponse?.success) {
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        user: userResponse.user,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_USER_FAILED,
+      });
+    }
+  };
+}

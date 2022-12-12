@@ -132,6 +132,21 @@ class Api {
     })
     .catch(e => console.log(e))
   }
+
+  updateUser(token, userData) {
+    return fetch(`${this._baseUrl}/auth/user`, {
+      headers: {
+        ...this._headers,
+        authorization: token,
+      },
+      method: 'PATCH',
+      body: JSON.stringify(userData),
+    })
+    .then((res) => {
+      return this._checkResponse(res)
+    })
+    .catch(e => console.log(e))
+  }
 }
 
 const api = new Api({
