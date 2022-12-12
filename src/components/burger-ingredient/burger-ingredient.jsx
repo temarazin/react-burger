@@ -1,13 +1,14 @@
 import styles from './burger-ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import { useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 
-function BurderIngredient({ item, onIndegrientClick }) {
+function BurderIngredient({ item }) {
   const { ingredients } = useSelector(store => store.burgerConstructor);
+  const location = useLocation();
 
   let count = useMemo(
     () => ingredients.filter(ingred => ingred._id === item._id).length,
@@ -25,22 +26,22 @@ function BurderIngredient({ item, onIndegrientClick }) {
     })
   })
 
-  const handleIngredientClick = () => {
-    onIndegrientClick(item._id);
-  }
-
   return (
-    <li className={`${styles.ingredient} ${isDrag && styles.isDragging}`} key={item._id}  onClick={handleIngredientClick}>
-      <img src={item.image} alt={item.name} className={`${styles.image} mr-4 mb-1 ml-4`} ref={dragRef} />
-      {count > 0 && <Counter count={count} size="default" extraClass={styles.counter} />}
-      <p className={`${styles.price} text text_type_digits-default mb-1`}>{item.price} <CurrencyIcon type="primary" /></p>
-      <p className={`${styles.name} text text_type_main-default`}>{item.name}</p>
+    <li className={`${styles.ingredient} ${isDrag && styles.isDragging}`} key={item._id} >
+      <Link className={styles.link} to={{
+        pathname: `/ingredients/${item._id}`,
+        state: { background: location }
+      }}>
+        <img src={item.image} alt={item.name} className={`${styles.image} mr-4 mb-1 ml-4`} ref={dragRef} />
+        {count > 0 && <Counter count={count} size="default" extraClass={styles.counter} />}
+        <p className={`${styles.price} text text_type_digits-default mb-1`}>{item.price} <CurrencyIcon type="primary" /></p>
+        <p className={`${styles.name} text text_type_main-default`}>{item.name}</p>
+      </Link>
     </li>
   )
 }
 BurderIngredient.propType ={
   item: ingredientPropTypes().isRequired,
-  onIndegrientClick: PropTypes.func.isRequired,
 }
 
 export default BurderIngredient;
