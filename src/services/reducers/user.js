@@ -17,6 +17,7 @@ const initialState = {
     email: '',
   },
   isAuth: false,
+  authChecked: false,
   request: false,
   requestFailed: false,
   isSuccessRegister: false,
@@ -51,6 +52,7 @@ export const userReducer = (state = initialState, action) => {
         requestFailed: false,
         user: action.user,
         isAuth: true,
+        authChecked: true,
       }
     case LOGIN_FAILED:
       return {
@@ -69,6 +71,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: action.user,
         isAuth: true,
+        authChecked: true,
         request: false,
         requestFailed: false
       }
@@ -77,6 +80,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: initialState.user,
         isAuth: false,
+        authChecked: true,
         request: false,
         requestFailed: true
       }

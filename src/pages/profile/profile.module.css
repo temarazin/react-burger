@@ -4,28 +4,6 @@
   margin: 100px 0 0;
 }
 
-.links {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.navlink {
-  display: block;
-  border: none;
-  background-color: transparent;
-  padding: 20px 0;
-  text-decoration: none;
-  color: #8585ad;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.navlink:hover {
-  color: #fff;
-}
-
-
 .form {
   display: flex;
   flex-direction: column;
