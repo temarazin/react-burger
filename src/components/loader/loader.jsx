@@ -1,4 +1,5 @@
 import styles from './loader.module.css';
+import PropTypes from 'prop-types';
 
 function Loader({ extraClass = '' }) {
   return (
@@ -12,6 +13,10 @@ function Loader({ extraClass = '' }) {
       </div>
     </div>
   )
+}
+
+Loader.propTypes = {
+  extraClass: PropTypes.string,
 }
 
 export default Loader;

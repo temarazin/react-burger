@@ -39,7 +39,10 @@ function BurderIngredientCategory({ data, cat, current, root, onSetCurrent, onIn
 }
 BurderIngredientCategory.propType ={
   data: PropTypes.arrayOf(ingredientPropTypes()).isRequired,
-  onIndegrientClick: PropTypes.func.isRequired
+  current: PropTypes.arrayOf(PropTypes.string).isRequired,
+  root: PropTypes.node.isRequired,
+  onSetCurrent: PropTypes.func.isRequired,
+  onIndegrientClick: PropTypes.func.isRequired,
 }
 
 export default BurderIngredientCategory;

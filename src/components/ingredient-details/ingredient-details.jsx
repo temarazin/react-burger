@@ -1,5 +1,4 @@
 import styles from './ingredient-details.module.css';
-import { ingredientPropTypes } from '../../utils/prop-types';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../loader/loader';
@@ -47,9 +46,6 @@ function IngredientDetails() {
       </ul>
     </div>
   );
-}
-IngredientDetails.propType ={
-  currentIngredient: ingredientPropTypes().isRequired,
 }
 
 export default IngredientDetails;
