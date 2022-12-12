@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Route, Redirect } from 'react-router-dom';
+import Loader from "../../loader/loader";
 
-function ProtectedRoute({ children, ...rest }) {
+function ProtectedRoute({ children, auth = true, ...rest }) {
   const { isAuth, authChecked } = useSelector(store => store.user);
   const [canProceed, setCanProceed] = useState(authChecked);
 
@@ -11,18 +12,31 @@ function ProtectedRoute({ children, ...rest }) {
   }, [authChecked])
 
   if (canProceed) {
-    return (
-      <Route
-        {...rest}
-        render={() => isAuth
-          ? (children)
-          : (<Redirect to="/login" />)
-        }
-      />
-    )
+    if (auth) {
+      return (
+        <Route
+          {...rest}
+          render={() => isAuth
+            ? (children)
+            : (<Redirect to="/login" />)
+          }
+        />
+      )
+    } else {
+      return (
+        <Route
+          {...rest}
+          render={() => !isAuth
+            ? (children)
+            : (<Redirect to="/" />)
+          }
+        />
+      )
+    }
+
   }
 
-  return (<></>);
+  return (<Loader extraClass="mt-20" />);
 }
 
 export default ProtectedRoute;

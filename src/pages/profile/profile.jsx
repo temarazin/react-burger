@@ -4,7 +4,7 @@ import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burg
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { updateUser } from '../../services/actions/user';
-import ProfileMenu from '../../components/profile-menu/prefile-menu';
+import ProfileMenu from '../../components/profile-menu/profile-menu';
 
 function Profile() {
   const dispatch = useDispatch();

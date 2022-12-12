@@ -1,4 +1,4 @@
-import styles from './prefile-menu.module.css';
+import styles from './profile-menu.module.css';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../services/actions/user';

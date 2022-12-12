@@ -1,15 +1,14 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { login } from '../../services/actions/user';
 
 function Login() {
 
   const dispatch = useDispatch();
-  const { request, requestFailed, isAuth } = useSelector(store => store.user);
-  const history = useHistory();
+  const { request, requestFailed } = useSelector(store => store.user);
 
   // TODO: переделать на что-то более компактное
   const [email, setEmail] = useState('');
@@ -19,12 +18,6 @@ function Login() {
     e.preventDefault();
     dispatch(login(email, password));
   }
-
-  useEffect(() => {
-    if (isAuth) {
-      history.push('/');
-    }
-  }, [isAuth, history])
 
   return (
     <div className={styles.container}>

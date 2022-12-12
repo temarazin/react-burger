@@ -5,7 +5,6 @@ import { Switch, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../services/actions/user';
-import { getAccessToken, getRefreshToken } from '../../utils/utils';
 import ProtectedRoute from '../hoc/protected-route/protected-route';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
@@ -32,18 +31,18 @@ function App() {
             <Route path="/" exact>
               <Main />
             </Route>
-            <Route path="/login" exact>
+            <ProtectedRoute auth={false} path="/login" exact>
               <Login />
-            </Route>
-            <Route path="/register" exact>
+            </ProtectedRoute>
+            <ProtectedRoute auth={false} path="/register" exact>
               <Register />
-            </Route>
-            <Route path="/forgot-password" exact>
+            </ProtectedRoute>
+            <ProtectedRoute auth={false} path="/forgot-password" exact>
               <ForgotPassword />
-            </Route>
-            <Route path="/reset-password" exact>
+            </ProtectedRoute>
+            <ProtectedRoute auth={false} path="/reset-password" exact>
               <ResetPassword />
-            </Route>
+            </ProtectedRoute>
             <ProtectedRoute path="/profile" exact>
               <Profile />
             </ProtectedRoute>
