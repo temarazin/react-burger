@@ -36,3 +36,8 @@
 .isDragging {
   outline: 2px solid #6237df;
 }
+
+.link {
+  text-decoration: none;
+  color: #fff;
+}

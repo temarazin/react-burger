@@ -35,3 +35,7 @@
 .menu__button_active {
   color: #f2f2f3;
 }
+
+.selected {
+  color: #fff;
+}
