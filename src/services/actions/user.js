@@ -102,7 +102,6 @@ export function getUser() {
     }
     if (!aToken) {
       try {
-        console.log('test');
         await refreshToken();
         aToken = getAccessToken();
         isTokenRefreshed = true;
@@ -151,7 +150,6 @@ export function updateUser(email, name, password) {
     }
     if (!aToken) {
       try {
-        console.log('test');
         await refreshToken();
         aToken = getAccessToken();
         isTokenRefreshed = true;

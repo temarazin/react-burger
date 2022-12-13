@@ -27,7 +27,7 @@ export function removeRefreshToken() {
 
 export function refreshToken() {
   if (!getRefreshToken()) return false;
-  api.refreshToken(getRefreshToken())
+  return api.refreshToken(getRefreshToken())
     .then(res => {
       if (res?.success) {
         setAccessToken(res.accessToken);
