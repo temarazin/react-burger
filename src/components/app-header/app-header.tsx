@@ -4,13 +4,17 @@ import { NavLink } from 'react-router-dom';
 import { useRouteMatch } from 'react-router-dom'
 import PropTypes from 'prop-types';
 
-function AppHeader({ className }) {
+type TAppHeaderProps = {
+  extraClass?: string,
+}
+
+function AppHeader({ extraClass = '' }:TAppHeaderProps):JSX.Element {
 
   const isProfile = !!useRouteMatch('/profile');
   const isConstructor = !!useRouteMatch({ path: '/', exact: true});
 
   return (
-    <header className={`${styles.container} ${className || ''} p-4`}>
+    <header className={`${styles.container} ${extraClass || ''} p-4`}>
       <nav className={styles.container__inner}>
           <ul className={`${styles.menu__list}`}>
             <li className={styles.menu__item}>

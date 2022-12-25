@@ -17,19 +17,20 @@ import Orders from '../../pages/profile/orders/orders';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Page404 from '../../pages/page-404/page-404';
 import Modal from '../modal/modal';
+import { TModalState } from '../../utils/types';
 
 function App() {
 
   const dispatch = useDispatch();
 
-  const location = useLocation();
+  const location = useLocation<TModalState>();
   const history = useHistory();
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getIngredients())
-    dispatch(getUser())
-  }, [])
+    dispatch<any>(getIngredients())
+    dispatch<any>(getUser())
+  }, [dispatch])
 
   const handleModalClose = () => {
     history.goBack();
@@ -38,7 +39,7 @@ function App() {
   return (
     <>
       <div className="App">
-        <AppHeader className="mb-5" />
+        <AppHeader extraClass="mb-5" />
         <main className={styles.content}>
           <Switch location={background || location}>
             <Route path="/" exact>

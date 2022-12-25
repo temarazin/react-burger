@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../services/actions/user';
 
-function ProfileMenu() {
+function ProfileMenu(): JSX.Element {
   const dispatch = useDispatch();
 
-  const logoutHandler = () => {
-    dispatch(logout());
+  const logoutHandler = (): void => {
+    dispatch<any>(logout());
   }
 
   return (

@@ -1,9 +1,13 @@
 import styles from './loader.module.css';
 import PropTypes from 'prop-types';
 
-function Loader({ extraClass = '' }) {
+type TLoaderProps = {
+  extraClass?: string
+}
+
+function Loader({ extraClass = '' }: TLoaderProps): JSX.Element {
   return (
-    <div className={`${styles.container} ${extraClass}`}>
+    <div className={`${styles.container} ${extraClass || ''}`}>
       <div className={styles.loader}>
         <span></span>
         <span></span>

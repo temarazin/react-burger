@@ -4,9 +4,14 @@ import { Route, Redirect } from 'react-router-dom';
 import Loader from "../../loader/loader";
 import PropTypes from 'prop-types';
 
-function ProtectedRoute({ children, auth = true, ...rest }) {
-  const { isAuth, authChecked } = useSelector(store => store.user);
-  const [canProceed, setCanProceed] = useState(authChecked);
+type TProtectedRouteProps = {
+  children: JSX.Element,
+  auth?: boolean
+}
+
+function ProtectedRoute({ children, auth = true, ...rest }: TProtectedRouteProps) {
+  const { isAuth, authChecked } = useSelector((store: any) => store.user);
+  const [canProceed, setCanProceed] = useState<boolean>(authChecked);
 
   useEffect(() => {
     setCanProceed(authChecked)

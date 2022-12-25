@@ -5,11 +5,17 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const modalPlace = document.getElementById('modal');
+const modalPlace = document.getElementById('modal')!;
 
-function Modal({ children, onClose, title }) {
+export type TModalProps = {
+  children: JSX.Element,
+  onClose: () => void,
+  title?: string,
+}
 
-  const handleEsc = (e) => {
+function Modal({ children, onClose, title = '' }: TModalProps): JSX.Element {
+
+  const handleEsc = (e:KeyboardEvent) => {
     if (e.key === 'Escape') {
       onClose();
     }
