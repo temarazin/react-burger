@@ -1,34 +1,35 @@
 import { TIngredient, TResponse, TUser } from "./types";
 
 type TRequest = {
-  baseUrl: string,
-  headers: HeadersInit
-}
+  baseUrl: string;
+  headers: HeadersInit;
+};
 
 type TIngredientsResponse = TResponse & {
-  data: TIngredient[]
-}
+  data: TIngredient[];
+};
 
 type TOrderResponse = TResponse & {
-  name: string,
+  name: string;
   order: {
-    number: number
-  }
-}
+    number: number;
+  };
+};
 
 type TUserDataResponse = TResponse & {
-  user: TUser
-}
+  user: TUser;
+};
 
-type TUserResponse = TResponse & TUserDataResponse & {
-  accessToken: string;
-  refreshToken: string;
-}
+type TUserResponse = TResponse &
+  TUserDataResponse & {
+    accessToken: string;
+    refreshToken: string;
+  };
 
 type TRefreshTokenResponse = TResponse & {
   accessToken: string;
   refreshToken: string;
-}
+};
 
 class Api {
   protected _baseUrl: string;
@@ -39,7 +40,7 @@ class Api {
     this._headers = headers;
   }
 
-  _checkResponse<T>(res:Response): Promise<T> {
+  _checkResponse<T>(res: Response): Promise<T> {
     if (res.ok) {
       return res.json();
     }
@@ -47,121 +48,88 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  // TODO: Выводить ошибки пользователю, а не в консоль.
   async getIngredients() {
-    try {
-      const res = await fetch(`${this._baseUrl}/ingredients`, {
-        headers: this._headers,
-      });
-      return await this._checkResponse<TIngredientsResponse>(res);
-    } catch (e) {
-      return console.log(e);
-    }
+    const res = await fetch(`${this._baseUrl}/ingredients`, {
+      headers: this._headers,
+    });
+    return await this._checkResponse<TIngredientsResponse>(res);
   }
 
   async createOrder(ingredientIds: Array<Pick<TIngredient, "_id">>) {
-    try {
-      const res = await fetch(`${this._baseUrl}/orders`, {
-        headers: this._headers,
-        method: 'POST',
-        body: JSON.stringify({
-          ingredients: ingredientIds
-        })
-      });
-      return await this._checkResponse<TOrderResponse>(res);
-    } catch (e) {
-      return console.log(e);
-    }
+    const res = await fetch(`${this._baseUrl}/orders`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({
+        ingredients: ingredientIds,
+      }),
+    });
+    return await this._checkResponse<TOrderResponse>(res);
   }
 
   async resetPassword(email: string) {
-    try {
-      const res = await fetch(`${this._baseUrl}/password-reset`, {
-        headers: this._headers,
-        method: 'POST',
-        body: JSON.stringify({
-          email
-        })
-      });
-      return await this._checkResponse<TResponse>(res);
-    } catch (e) {
-      return console.log(e);
-    }
+    const res = await fetch(`${this._baseUrl}/password-reset`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({
+        email,
+      }),
+    });
+    return await this._checkResponse<TResponse>(res);
   }
 
   async setNewPassword(password: string, token: string) {
-    try {
-      const res = await fetch(`${this._baseUrl}/password-reset`, {
-        headers: this._headers,
-        method: 'POST',
-        body: JSON.stringify({
-          password,
-          token
-        })
-      });
-      return await this._checkResponse<TResponse>(res);
-    } catch (e) {
-      return console.log(e);
-    }
+    const res = await fetch(`${this._baseUrl}/password-reset/reset`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({
+        password,
+        token,
+      }),
+    });
+    return await this._checkResponse<TResponse>(res);
   }
 
   async registerUser(email: string, password: string, name: string) {
-    try {
-      const res = await fetch(`${this._baseUrl}/auth/register`, {
-        headers: this._headers,
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-          name
-        })
-      });
-      return await this._checkResponse<TUserResponse>(res);
-    } catch (e) {
-      return console.log(e);
-    }
+    const res = await fetch(`${this._baseUrl}/auth/register`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+        name,
+      }),
+    });
+    return await this._checkResponse<TUserResponse>(res);
   }
 
   async login(email: string, password: string) {
-    try {
-      const res = await fetch(`${this._baseUrl}/auth/login`, {
-        headers: this._headers,
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-        })
-      });
-      return await this._checkResponse<TUserResponse>(res);
-    } catch (e) {
-      return console.log(e);
-    }
+    const res = await fetch(`${this._baseUrl}/auth/login`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    return await this._checkResponse<TUserResponse>(res);
   }
 
   async logout(token: string) {
-    try {
-      const res = await fetch(`${this._baseUrl}/auth/logout`, {
-        headers: this._headers,
-        method: 'POST',
-        body: JSON.stringify({ token }),
-      });
-      return await this._checkResponse<TResponse>(res);
-    } catch (e) {
-      return console.log(e);
-    }
+    const res = await fetch(`${this._baseUrl}/auth/logout`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({ token }),
+    });
+    return await this._checkResponse<TResponse>(res);
   }
 
   async refreshToken(token: string) {
-    try {
-      const res = await fetch(`${this._baseUrl}/auth/token`, {
-        headers: this._headers,
-        method: 'POST',
-        body: JSON.stringify({ token }),
-      });
-      return await this._checkResponse<TRefreshTokenResponse>(res);
-    } catch (e) {
-      return console.log(e);
-    }
+    const res = await fetch(`${this._baseUrl}/auth/token`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({ token }),
+    });
+    return await this._checkResponse<TRefreshTokenResponse>(res);
   }
 
   getUser(token: string) {
@@ -170,12 +138,10 @@ class Api {
         ...this._headers,
         authorization: token,
       },
-      method: 'GET',
-    })
-    .then((res) => {
-      return this._checkResponse<TUserDataResponse>(res)
-    })
-    .catch(e => console.log(e))
+      method: "GET",
+    }).then((res) => {
+      return this._checkResponse<TUserDataResponse>(res);
+    });
   }
 
   updateUser(token: string, userData: TUser) {
@@ -184,13 +150,11 @@ class Api {
         ...this._headers,
         authorization: token,
       },
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(userData),
-    })
-    .then((res) => {
-      return this._checkResponse<TUserDataResponse>(res)
-    })
-    .catch(e => console.log(e))
+    }).then((res) => {
+      return this._checkResponse<TUserDataResponse>(res);
+    });
   }
 }
 

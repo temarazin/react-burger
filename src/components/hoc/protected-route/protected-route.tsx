@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteProps } from 'react-router-dom';
 import Loader from "../../loader/loader";
 import PropTypes from 'prop-types';
 
-type TProtectedRouteProps = {
+interface TProtectedRouteProps extends RouteProps {
   children: JSX.Element,
-  auth?: boolean
+  auth?: boolean,
 }
 
 function ProtectedRoute({ children, auth = true, ...rest }: TProtectedRouteProps) {

@@ -2,15 +2,15 @@ import styles from './forgot-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import api from '../../utils/api';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { setCookie } from '../../utils/cookie';
 
-function ForgotPassword() {
+function ForgotPassword():JSX.Element {
   const [email, setEmail] = useState('');
   const [isReset, setIsReset] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     api.resetPassword(email)
       .then((res) => {
@@ -20,7 +20,7 @@ function ForgotPassword() {
           })
           setIsReset(true);
         } else {
-          setError(res.message);
+          setError(res.message || 'Неизвестная ошибка');
         }
       })
       .catch((e) => {
