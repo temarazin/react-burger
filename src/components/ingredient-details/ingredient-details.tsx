@@ -1,7 +1,24 @@
 import styles from './ingredient-details.module.css';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Loader from '../loader/loader';
+import { TIngredient } from '../../utils/types';
 
-function IngredientDetails({ currentIngredient }) {
+interface IIngredientDetailsParams {
+  ingredientId: string;
+}
+
+function IngredientDetails(): JSX.Element {
+  const { ingredientId } = useParams<IIngredientDetailsParams>();
+  const { ingredients, request } = useSelector((store:any) => store.ingredients);
+  let currentIngredient = ingredients.find((item: TIngredient) => item._id === ingredientId)
+  if (!currentIngredient) {
+    return (
+      request
+        ? ( <Loader />)
+        : ( <p className='text'>Не найден</p>)
+      )
+  }
   const {
     name,
     proteins,
@@ -34,9 +51,6 @@ function IngredientDetails({ currentIngredient }) {
       </ul>
     </div>
   );
-}
-IngredientDetails.propType ={
-  currentIngredient: ingredientPropTypes().isRequired,
 }
 
 export default IngredientDetails;

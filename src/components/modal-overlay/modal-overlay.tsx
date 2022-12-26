@@ -1,9 +1,12 @@
 import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
+import { TModalProps } from '../modal/modal';
 
-function ModalOverlay({ onClose }) {
 
-  function handleClick(e) {
+
+function ModalOverlay({ onClose }: Pick<TModalProps, "onClose">) {
+
+  function handleClick(e:React.SyntheticEvent) {
     if (e.target === e.currentTarget) {
       onClose();
     }
