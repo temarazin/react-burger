@@ -1,4 +1,5 @@
 import api from "../../utils/api";
+import { AppDispatch, AppThunk, TUser } from "../../utils/types";
 import {
   getAccessToken,
   setAccessToken,
@@ -6,28 +7,81 @@ import {
   getRefreshToken,
   setRefreshToken,
   removeRefreshToken,
-  refreshToken
-} from '../../utils/utils';
+  refreshToken,
+} from "../../utils/utils";
+import {
+  START_REQUEST,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_FAILED,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGOUT,
+  GET_USER_FAILED,
+  GET_USER_SUCCESS,
+  UPDATE_USER_FAILED,
+  UPDATE_USER_SUCCESS,
+} from "../constants/actions";
 
-export const START_REQUEST = "START_REQUEST";
-export const REGISTER_USER_SUCCESS = "REGISTER_USER_SUCCESS";
-export const REGISTER_USER_FAILED = "REGISTER_USER_FAILED";
+export interface IStartRequestAction {
+  readonly type: typeof START_REQUEST;
+}
 
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILED = "LOGIN_FAILED";
+export interface IRegisterUserSuccessAction {
+  readonly type: typeof REGISTER_USER_SUCCESS;
+}
 
-export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
-export const GET_USER_FAILED = "GET_USER_FAILED";
+export interface IRegisterUserFailedAction {
+  readonly type: typeof REGISTER_USER_FAILED;
+}
 
-export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
-export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
+export interface ILoginSuccessAction {
+  readonly type: typeof LOGIN_SUCCESS;
+  readonly user: TUser;
+}
 
-export const LOGOUT = "LOGOUT";
+export interface ILoginFailedAction {
+  readonly type: typeof LOGIN_FAILED;
+}
 
-export function registerUser(email, password, name) {
-  return function (dispatch) {
+export interface ILogoutAction {
+  readonly type: typeof LOGOUT;
+}
+
+export interface IGetUserSuccessAction {
+  readonly type: typeof GET_USER_SUCCESS;
+  readonly user: TUser;
+}
+
+export interface IGetUserFailedAction {
+  readonly type: typeof GET_USER_FAILED;
+}
+
+export interface IUpdateUserSuccessAction {
+  readonly type: typeof UPDATE_USER_SUCCESS;
+  readonly user: TUser;
+}
+
+export interface IUpdateUserFailedAction {
+  readonly type: typeof UPDATE_USER_FAILED;
+}
+
+export type TUserActions =
+  | IStartRequestAction
+  | IRegisterUserSuccessAction
+  | IRegisterUserFailedAction
+  | ILoginSuccessAction
+  | ILoginFailedAction
+  | ILogoutAction
+  | IGetUserSuccessAction
+  | IGetUserFailedAction
+  | IUpdateUserSuccessAction
+  | IUpdateUserFailedAction;
+
+export const registerUser:AppThunk = (email: string, password: string, name: string) => {
+  return function (dispatch:AppDispatch) {
     dispatch({ type: START_REQUEST });
-    api.registerUser(email, password, name)
+    api
+      .registerUser(email, password, name)
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -47,18 +101,19 @@ export function registerUser(email, password, name) {
   };
 }
 
-export function login(email, password) {
-  return function (dispatch) {
+export const login:AppThunk = (email: string, password: string) => {
+  return function (dispatch:AppDispatch) {
     dispatch({ type: START_REQUEST });
-    api.login(email, password)
+    api
+      .login(email, password)
       .then((res) => {
         if (res && res.success) {
-          let {user, accessToken, refreshToken} = res;
+          let { user, accessToken, refreshToken } = res;
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
           dispatch({
             type: LOGIN_SUCCESS,
-            user
+            user,
           });
         } else {
           dispatch({
@@ -74,30 +129,31 @@ export function login(email, password) {
   };
 }
 
-export function logout() {
-  return function (dispatch) {
-    api.logout(getRefreshToken())
+export const logout:AppThunk = () => {
+  return function (dispatch:AppDispatch) {
+    api
+      .logout(getRefreshToken())
       .then((res) => {
         if (res.success) {
           removeRefreshToken();
           removeAccessToken();
           dispatch({
-            type: LOGOUT
+            type: LOGOUT,
           });
         }
       })
-      .catch(e => console.log(e.message));
-  }
+      .catch((e) => console.log(e.message));
+  };
 }
 
-export function getUser() {
-  return async function (dispatch) {
+export const getUser:AppThunk = () => {
+  return async function (dispatch:AppDispatch) {
     dispatch({ type: START_REQUEST });
     let aToken = getAccessToken();
     let rToken = getRefreshToken();
     let isTokenRefreshed = false;
     if (!aToken && !rToken) {
-      dispatch({type: GET_USER_FAILED});
+      dispatch({ type: GET_USER_FAILED });
       return;
     }
     if (!aToken) {
@@ -105,24 +161,28 @@ export function getUser() {
         await refreshToken();
         aToken = getAccessToken();
         isTokenRefreshed = true;
-      } catch(e) {
+      } catch (e) {
         console.log(e);
-        dispatch({type: GET_USER_FAILED});
+        dispatch({ type: GET_USER_FAILED });
         return;
       }
     }
 
     let userResponse;
     try {
+      if (aToken === undefined)
+        return;
       userResponse = await api.getUser(aToken);
       if (!userResponse?.success && !isTokenRefreshed) {
         await refreshToken();
         aToken = getAccessToken();
+        if (aToken === undefined)
+          return;
         userResponse = await api.getUser(aToken);
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
-      dispatch({type: GET_USER_FAILED});
+      dispatch({ type: GET_USER_FAILED });
     }
 
     if (userResponse?.success) {
@@ -138,14 +198,14 @@ export function getUser() {
   };
 }
 
-export function updateUser(email, name, password) {
-  return async function (dispatch) {
+export const updateUser:AppThunk = (email: string, name: string, password: string) => {
+  return async function (dispatch:AppDispatch) {
     dispatch({ type: START_REQUEST });
     let aToken = getAccessToken();
     let rToken = getRefreshToken();
     let isTokenRefreshed = false;
     if (!aToken && !rToken) {
-      dispatch({type: UPDATE_USER_FAILED});
+      dispatch({ type: UPDATE_USER_FAILED });
       return;
     }
     if (!aToken) {
@@ -153,27 +213,33 @@ export function updateUser(email, name, password) {
         await refreshToken();
         aToken = getAccessToken();
         isTokenRefreshed = true;
-      } catch(e) {
+      } catch (e) {
         console.log(e);
-        dispatch({type: UPDATE_USER_FAILED});
+        dispatch({ type: UPDATE_USER_FAILED });
         return;
       }
     }
 
     let userResponse;
     let userData = {
-      email, name, password
-    }
+      email,
+      name,
+      password,
+    };
     try {
+      if (aToken === undefined)
+        return;
       userResponse = await api.updateUser(aToken, userData);
       if (!userResponse?.success && !isTokenRefreshed) {
         await refreshToken();
         aToken = getAccessToken();
+        if (aToken === undefined)
+          return;
         userResponse = await api.updateUser(aToken, userData);
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
-      dispatch({type: UPDATE_USER_FAILED});
+      dispatch({ type: UPDATE_USER_FAILED });
     }
 
     if (userResponse?.success) {

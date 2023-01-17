@@ -6,11 +6,11 @@ import {
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useEffect, useState, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
-import { burgerConstructorActions } from "../../services/actionCreators/burgerConstructor";
+import { burgerConstructorActions } from "../../services/actions/burgerConstructor";
 import { getOrder } from "../../services/actions/order";
 import { v4 as uuidv4 } from "uuid";
 import { TIngredient } from "../../utils/types";

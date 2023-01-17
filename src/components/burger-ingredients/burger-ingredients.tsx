@@ -2,10 +2,10 @@ import styles from './burger-ingredients.module.css';
 
 import { useEffect, useState, useRef} from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 
 import { getIngredients } from '../../services/actions/ingredients';
-import { ingredientDetailActions } from '../../services/actionCreators/ingredientDetail';
+import { ingredientDetailActions } from '../../services/actions/ingredientDetail';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import BurderIngredientCategory from '../burger-ingredient-category/burger-ingredient-category';

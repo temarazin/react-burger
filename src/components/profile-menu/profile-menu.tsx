@@ -1,6 +1,6 @@
 import styles from './profile-menu.module.css';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { logout } from '../../services/actions/user';
 
 function ProfileMenu(): JSX.Element {

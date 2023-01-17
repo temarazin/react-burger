@@ -1,10 +1,18 @@
+import { TOrder } from "../../utils/types";
+import { TOrderActions } from "../actions/order";
 import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
-} from "../actions/order";
+} from "../constants/actions";
 
-const initialState = {
+type TOrderState = {
+  request: boolean,
+  requestFailed: boolean,
+  order: TOrder
+}
+
+const initialState: TOrderState = {
   request: false,
   requestFailed: false,
   order: {
@@ -15,7 +23,7 @@ const initialState = {
   }
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
   switch (action.type) {
     case GET_ORDER_REQUEST:
       return {

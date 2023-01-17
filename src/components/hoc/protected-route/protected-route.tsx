@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../../services/hooks";
 import { useState, useEffect } from "react";
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import Loader from "../../loader/loader";

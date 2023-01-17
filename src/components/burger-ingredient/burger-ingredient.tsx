@@ -4,7 +4,7 @@ import { ingredientPropTypes } from '../../utils/prop-types';
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { TIngredient } from '../../utils/types';
 
 type TBurderIngredientProps = {

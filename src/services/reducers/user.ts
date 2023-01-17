@@ -1,3 +1,5 @@
+import { TUser } from '../../utils/types';
+import { TUserActions } from '../actions/user';
 import {
   START_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -9,9 +11,18 @@ import {
   GET_USER_FAILED,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
-} from '../actions/user';
+} from '../constants/actions';
 
-const initialState = {
+type TUserState = {
+  user: TUser,
+  isAuth: boolean,
+  authChecked: boolean,
+  request: boolean,
+  requestFailed: boolean,
+  isSuccessRegister: boolean,
+}
+
+const initialState: TUserState = {
   user: {
     name: '',
     email: '',
@@ -23,7 +34,7 @@ const initialState = {
   isSuccessRegister: false,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
   switch (action.type) {
     case START_REQUEST:
       return {
