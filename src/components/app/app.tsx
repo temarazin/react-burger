@@ -18,6 +18,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Page404 from '../../pages/page-404/page-404';
 import Modal from '../modal/modal';
 import { TModalState } from '../../utils/types';
+import Feed from '../../pages/feed/feed';
 
 function App() {
 
@@ -44,6 +45,9 @@ function App() {
           <Switch location={background || location}>
             <Route path="/" exact>
               <Main />
+            </Route>
+            <Route path="/feed" exact>
+              <Feed />
             </Route>
             <ProtectedRoute auth={false} path="/login" exact>
               <Login />
