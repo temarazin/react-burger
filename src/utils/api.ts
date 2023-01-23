@@ -55,9 +55,12 @@ class Api {
     return await this._checkResponse<TIngredientsResponse>(res);
   }
 
-  async createOrder(ingredientIds: Array<Pick<TIngredient, "_id">>) {
+  async createOrder(ingredientIds: Array<Pick<TIngredient, "_id">>, token: string) {
     const res = await fetch(`${this._baseUrl}/orders`, {
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        authorization: token,
+      },
       method: "POST",
       body: JSON.stringify({
         ingredients: ingredientIds,

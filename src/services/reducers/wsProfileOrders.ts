@@ -1,8 +1,8 @@
 import { TOrderFull } from "../../utils/types";
-import { TWsFeedActions } from "../actions/wsFeed";
-import { WS_FEED_CONNECTION_SUCCESS, WS_FEED_CONNECTION_ERROR, WS_FEED_CONNECTION_CLOSED, WS_FEED_GET_MESSAGE, WS_FEED_CLOSE_CONNECTON } from "../constants/wsActionTypes";
+import { TWsProfileOrdersActions } from "../actions/wsProfileOrders";
+import { WS_PROFILE_ORDERS_CONNECTION_SUCCESS, WS_PROFILE_ORDERS_CONNECTION_ERROR, WS_PROFILE_ORDERS_CONNECTION_CLOSED, WS_PROFILE_ORDERS_GET_MESSAGE, WS_PROFILE_ORDERS_CLOSE_CONNECTON } from "../constants/wsActionTypes";
 
-type TWsFeedState = {
+type TWsProfileOrdersState = {
   wsConnected: boolean;
   error: Event | undefined;
   orders: TOrderFull[];
@@ -10,7 +10,7 @@ type TWsFeedState = {
   totalToday: number;
 }
 
-const initialState: TWsFeedState = {
+const initialState: TWsProfileOrdersState = {
   wsConnected: false,
   error: undefined,
   orders: [],
@@ -18,36 +18,36 @@ const initialState: TWsFeedState = {
   totalToday: 0,
 };
 
-export const wsFeedReducer = (state = initialState, action: TWsFeedActions): TWsFeedState => {
+export const wsProfileOrdersReducer = (state = initialState, action: TWsProfileOrdersActions): TWsProfileOrdersState => {
   switch (action.type) {
-    case WS_FEED_CONNECTION_SUCCESS:
+    case WS_PROFILE_ORDERS_CONNECTION_SUCCESS:
       return {
         ...state,
         error: undefined,
         wsConnected: true
       };
 
-    case WS_FEED_CONNECTION_ERROR:
+    case WS_PROFILE_ORDERS_CONNECTION_ERROR:
       return {
         ...state,
         error: action.payload,
         wsConnected: false
       };
 
-    case WS_FEED_CONNECTION_CLOSED:
+    case WS_PROFILE_ORDERS_CONNECTION_CLOSED:
       return {
         ...state,
         error: undefined,
         wsConnected: false
       };
 
-    case WS_FEED_GET_MESSAGE:
+    case WS_PROFILE_ORDERS_GET_MESSAGE:
       return {
         ...state,
         error: undefined,
         ...JSON.parse(action.payload)
       };
-    case WS_FEED_CLOSE_CONNECTON:
+    case WS_PROFILE_ORDERS_CLOSE_CONNECTON:
       return initialState;
     default:
       return state;

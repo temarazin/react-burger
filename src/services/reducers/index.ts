@@ -5,6 +5,7 @@ import { orderReducer } from './order';
 import { ingredientDetailReducer } from './ingredientDetail';
 import { userReducer } from './user';
 import { wsFeedReducer } from './wsFeed';
+import { wsProfileOrdersReducer } from './wsProfileOrders';
 
 export const rootReducer = combineReducers({
   burgerConstructor: burgerConstructorReducer,
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
   order: orderReducer,
   ingredientDetail: ingredientDetailReducer,
   user: userReducer,
-  wsFeed: wsFeedReducer
+  wsFeed: wsFeedReducer,
+  wsOrderHistory: wsProfileOrdersReducer
 });

@@ -13,7 +13,8 @@ import BurgerConstructorItem from "../burger-constructor-item/burger-constructor
 import { burgerConstructorActions } from "../../services/actions/burgerConstructor";
 import { getOrder } from "../../services/actions/order";
 import { v4 as uuidv4 } from "uuid";
-import { TIngredient } from "../../utils/types";
+import { RootState, TIngredient } from "../../utils/types";
+import Loader from "../loader/loader";
 
 function BurgerConstructor(): JSX.Element {
   const { addIngredient, removeIngredient, addBun } = burgerConstructorActions;
@@ -21,10 +22,11 @@ function BurgerConstructor(): JSX.Element {
 
   const history = useHistory();
 
-  const { ingredients } = useSelector((store: any) => store.burgerConstructor);
-  const { isAuth } = useSelector((store: any) => store.user);
+  const { ingredients } = useSelector((store: RootState) => store.burgerConstructor);
+  const { isAuth } = useSelector((store: RootState) => store.user);
   const [canOrder, setCanOrder] = useState(false);
-  const { order } = useSelector((store: any) => store.order.order);
+  const { request, order: orderF } = useSelector((store: RootState) => store.order);
+  const order = orderF.order;
 
   const onDropHandler = (item: TIngredient) => {
     if (ingredients[1]?.uuid === "placeholder_ingredient") {
@@ -69,7 +71,7 @@ function BurgerConstructor(): JSX.Element {
   }, [ingredients]);
 
   useEffect(() => {
-    if (order.number > 0) {
+    if (order.number !== null) {
       setIsModalOpened(true);
     }
   }, [order.number]);
@@ -99,43 +101,49 @@ function BurgerConstructor(): JSX.Element {
   return (
     <>
       <section className="mt-25" aria-label="Конструктор">
-        <ul
-          className={`${styles.constructor} ${
-            isHover && styles.isHover
-          } pr-4 pl-4`}
-          ref={dropTarget}
-        >
-          {ingredients.map((item:TIngredient, i:number) => {
-            return (
-              <BurgerConstructorItem
-                item={item}
-                key={item.uuid}
-                isLocked={i === 0}
-                type={i === 0 ? "top" : undefined}
-              />
-            );
-          })}
-          <BurgerConstructorItem
-            item={ingredients[0]}
-            key={"bottom-bun"}
-            isLocked={true}
-            type="bottom"
-          />
-        </ul>
-        <div className={`${styles["order-submit"]} mt-10`}>
-          <p className="text text_type_digits-medium mr-10">
-            {totalPrice} <CurrencyIcon type="primary" />
-          </p>
-          <Button
-            type="primary"
-            htmlType="button"
-            size="large"
-            onClick={createOrder}
-            disabled={!canOrder}
-          >
-            Оформить заказ
-          </Button>
-        </div>
+        {request
+          ? (<Loader />)
+          : (<>
+              <ul
+                className={`${styles.constructor} ${
+                  isHover && styles.isHover
+                } pr-4 pl-4`}
+                ref={dropTarget}
+              >
+                {ingredients.map((item:TIngredient, i:number) => {
+                  return (
+                    <BurgerConstructorItem
+                      item={item}
+                      key={item.uuid}
+                      isLocked={i === 0}
+                      type={i === 0 ? "top" : undefined}
+                    />
+                  );
+                })}
+                <BurgerConstructorItem
+                  item={ingredients[0]}
+                  key={"bottom-bun"}
+                  isLocked={true}
+                  type="bottom"
+                />
+              </ul>
+              <div className={`${styles["order-submit"]} mt-10`}>
+                <p className="text text_type_digits-medium mr-10">
+                  {totalPrice} <CurrencyIcon type="primary" />
+                </p>
+                <Button
+                  type="primary"
+                  htmlType="button"
+                  size="large"
+                  onClick={createOrder}
+                  disabled={!canOrder}
+                >
+                  Оформить заказ
+                </Button>
+              </div>
+          </>)
+        }
+
       </section>
       {isModalOpened && modal}
     </>

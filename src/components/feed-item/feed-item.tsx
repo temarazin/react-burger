@@ -1,4 +1,5 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import React from 'react';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, TOrderFull } from '../../utils/types';
@@ -38,14 +39,20 @@ function FeedItem({ data }: TFeedItemProps ) {
       <div className={`${styles.bottom} mt-6`}>
         <ul className={`${styles['ingredient-list']}`}>
           {data.ingredients.map((item, index) => (
-            <li key={index} className={styles['ingredient-item']} >
-              <img
-                style={{zIndex: 20 - index}}
-                className={`${styles.ingredient}`}
-                src={ingredients.find(ingredient => ingredient._id === item)?.image_mobile}
-                alt={ingredients.find(ingredient => ingredient._id === item)?.name}
-              />
-            </li>
+            <React.Fragment key={index}>
+              {index < 5 && (
+                <li key={index} className={styles['ingredient-item']} >
+                  <img
+                    style={{zIndex: 20 - index}}
+                    className={`${styles.ingredient}`}
+                    src={ingredients.find(ingredient => ingredient._id === item)?.image_mobile}
+                    alt={ingredients.find(ingredient => ingredient._id === item)?.name}
+                  />
+                </li>
+              )}
+
+            </React.Fragment>
+
           ))}
         </ul>
         <p className={`${styles.price} text text_type_digits-default`}>

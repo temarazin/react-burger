@@ -24,10 +24,10 @@ function AppHeader({ extraClass = '' }:TAppHeaderProps):JSX.Element {
               </NavLink>
             </li>
             <li className={styles.menu__item}>
-              <a href="/" className={`${styles.menu__button} p-5`}>
+              <NavLink to="/feed" className={`${styles.menu__button} p-5`}>
                 <ListIcon type="secondary" />
                 <span className="text text_type_main-default ml-2">Лента заказов</span>
-              </a>
+              </NavLink>
             </li>
           </ul>
         <Logo></Logo>

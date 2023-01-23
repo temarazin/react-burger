@@ -1,5 +1,6 @@
 import api from "../../utils/api";
 import { AppDispatch, AppThunk, TIngredient, TOrder } from "../../utils/types";
+import { getAccessToken } from "../../utils/utils";
 import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED } from "../constants/actions";
 
 export interface IGetOrderRequestAction {
@@ -23,7 +24,8 @@ export type TOrderActions =
 export const getOrder:AppThunk = (ingredientIds:Array<Pick<TIngredient, '_id'>>) => {
   return function (dispatch: AppDispatch) {
     dispatch({ type: GET_ORDER_REQUEST });
-    api.createOrder(ingredientIds)
+    const token = getAccessToken() || '';
+    api.createOrder(ingredientIds, token)
       .then((res) => {
         if (res && res.success) {
           const {name, order} = res

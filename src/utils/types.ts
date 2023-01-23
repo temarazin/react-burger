@@ -7,6 +7,7 @@ import { TIngredientsActions } from "../services/actions/ingredients";
 import { TOrderActions } from "../services/actions/order";
 import { TUserActions } from "../services/actions/user";
 import { TWsFeedActions } from "../services/actions/wsFeed";
+import { TWsProfileOrdersActions } from "../services/actions/wsProfileOrders";
 import { store } from "../services/store";
 import { ingredientCategory } from "./enums";
 
@@ -71,7 +72,8 @@ export type TApplicationActions =
   | TIngredientsActions
   | TOrderActions
   | TUserActions
-  | TWsFeedActions;
+  | TWsFeedActions
+  | TWsProfileOrdersActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>
