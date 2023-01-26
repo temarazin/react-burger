@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../utils/types';
 import styles from './feed-screen.module.css';
 
-export function FeedScreen() {
+const ROW_COUNT = 5;
+const COLUMN_COUNT = 3;
 
-  const ROW_COUNT = 5;
-  const COLUMN_COUNT = 3;
+export function FeedScreen() {
 
   const { orders, total, totalToday } = useSelector(
     (store:RootState) => store.wsFeed
