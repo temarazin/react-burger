@@ -2,12 +2,13 @@ import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
-import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../services/actions/burgerConstructor';
+import { burgerConstructorActions } from '../../services/actionCreators/burgerConstructor';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 
 function BurgerConstructorItem({ item, isLocked = false, type = undefined }) {
 
+  const { removeIngredient, moveIngredient } = burgerConstructorActions;
   const dispatch = useDispatch();
   const name = item.name + (type === 'top' ? ' (верх)' : type === 'bottom' ? ' (низ)' : '');
 
@@ -15,11 +16,7 @@ function BurgerConstructorItem({ item, isLocked = false, type = undefined }) {
     if (draggedItem.uuid === item.uuid) {
       return;
     }
-    dispatch({
-      type: MOVE_INGREDIENT,
-      itemUuid: draggedItem.uuid,
-      pasteAfterItemUuid: item.uuid
-    });
+    dispatch(moveIngredient(draggedItem.uuid, item.uuid));
   }
 
   const [{ isDrag }, dragRef] = useDrag({
@@ -41,7 +38,7 @@ function BurgerConstructorItem({ item, isLocked = false, type = undefined }) {
   });
 
   const handleRemove = () => {
-    dispatch({ type: REMOVE_INGREDIENT, uuid: item.uuid });
+    dispatch(removeIngredient(item.uuid));
   }
 
   return (
