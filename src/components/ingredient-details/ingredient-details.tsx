@@ -11,7 +11,7 @@ interface IIngredientDetailsParams {
 function IngredientDetails(): JSX.Element {
   const { ingredientId } = useParams<IIngredientDetailsParams>();
   const { ingredients, request } = useSelector((store:any) => store.ingredients);
-  let currentIngredient = ingredients.find((item: TIngredient) => item._id === ingredientId)
+  const currentIngredient = ingredients.find((item: TIngredient) => item._id === ingredientId)
   if (!currentIngredient) {
     return (
       request

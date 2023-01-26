@@ -13,8 +13,8 @@ export function FeedScreen() {
   );
 
   const data = useMemo(() => {
-    let done:Array<Array<number>> = [[]];
-    let inprogress:Array<Array<number>> = [[]];
+    const done:Array<Array<number>> = [[]];
+    const inprogress:Array<Array<number>> = [[]];
     orders.forEach(item => {
       if (item.status === 'done') {
         if (done[done.length - 1].length >= ROW_COUNT) {

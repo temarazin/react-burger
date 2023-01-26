@@ -18,8 +18,8 @@ function FeedItem({ data }: TFeedItemProps ) {
   const price: number = useMemo(
     () =>
       data.ingredients.reduce((sum: number, id: string) => {
-        let item = ingredients.find(item => item._id === id);
-        let price = item?.price || 0;
+        const item = ingredients.find(item => item._id === id);
+        const price = item?.price || 0;
         return (sum += price);
       }, 0),
     [ingredients, data.ingredients]

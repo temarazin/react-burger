@@ -108,7 +108,7 @@ export const login:AppThunk = (email: string, password: string) => {
       .login(email, password)
       .then((res) => {
         if (res && res.success) {
-          let { user, accessToken, refreshToken } = res;
+          const { user, accessToken, refreshToken } = res;
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
           dispatch({
@@ -150,7 +150,7 @@ export const getUser:AppThunk = () => {
   return async function (dispatch:AppDispatch) {
     dispatch({ type: START_REQUEST });
     let aToken = getAccessToken();
-    let rToken = getRefreshToken();
+    const rToken = getRefreshToken();
     let isTokenRefreshed = false;
     if (!aToken && !rToken) {
       dispatch({ type: GET_USER_FAILED });
@@ -202,7 +202,7 @@ export const updateUser:AppThunk = (email: string, name: string, password: strin
   return async function (dispatch:AppDispatch) {
     dispatch({ type: START_REQUEST });
     let aToken = getAccessToken();
-    let rToken = getRefreshToken();
+    const rToken = getRefreshToken();
     let isTokenRefreshed = false;
     if (!aToken && !rToken) {
       dispatch({ type: UPDATE_USER_FAILED });
@@ -221,7 +221,7 @@ export const updateUser:AppThunk = (email: string, name: string, password: strin
     }
 
     let userResponse;
-    let userData = {
+    const userData = {
       email,
       name,
       password,
