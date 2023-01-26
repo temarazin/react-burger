@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { getOrderById } from '../../services/actions/order';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { RootState, TIngredient } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 import styles from './order-info.module.css';
 
 interface IOrderInfoParams {
@@ -15,10 +15,10 @@ export function OrderInfo() {
 
   const dispatch = useDispatch();
   const { orderFull } = useSelector(
-    (store: RootState) => store.order
+    (store) => store.order
   );
   const { ingredients } = useSelector(
-    (store: RootState) => store.ingredients
+    (store) => store.ingredients
   );
   useEffect(() => {
     dispatch<any>(getOrderById(parseInt(orderId)));
@@ -65,14 +65,6 @@ export function OrderInfo() {
 
     return ingredientsPrepared.reduce((sum, item) => sum + (item.ingredient?.price || 0) * (item.count || 0), 0 )
   }, [ingredientsPrepared])
-  // if (orderFull !== null) {
-  //   const ids = Array.from(new Set(orderFull.ingredients));
-
-  //   ingredientsPrepared = ids.map(id => ({
-  //     ingredient: ingredients.find(item => item._id === id),
-  //     count: orderFull.ingredients.filter(item => item === id).length
-  //   }));
-  // }
 
   return (<>
     {orderFull !== null && (

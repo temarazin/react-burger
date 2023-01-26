@@ -1,9 +1,9 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { RootState, TOrderFull } from '../../utils/types';
+import { useSelector } from '../../services/hooks';
+import { TOrderFull } from '../../utils/types';
 import styles from './feed-item.module.css';
 
 type TFeedItemProps = {
@@ -12,18 +12,14 @@ type TFeedItemProps = {
 
 function FeedItem({ data }: TFeedItemProps ) {
 
-  const { ingredients } = useSelector((store: RootState) => store.ingredients);
+  const { ingredients } = useSelector((store) => store.ingredients);
   const location = useLocation();
 
   const price: number = useMemo(
     () =>
       data.ingredients.reduce((sum: number, id: string) => {
         let item = ingredients.find(item => item._id === id);
-
         let price = item?.price || 0;
-        // if (item?.type === "bun") {
-        //   price *= 2;
-        // }
         return (sum += price);
       }, 0),
     [ingredients, data.ingredients]

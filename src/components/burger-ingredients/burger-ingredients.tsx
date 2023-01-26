@@ -41,8 +41,8 @@ function BurgerIngredients() {
     },
   ]
 
-  const { ingredients } = useSelector((store: any) => store.ingredients);
-  const { currentIngredient } = useSelector((store: any) => store.ingredientDetail)
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const { currentIngredient } = useSelector((store) => store.ingredientDetail)
 
   function onTabClickHandler(tab: string): void {
     const category = categories.find(item => item.type === tab);
@@ -58,7 +58,11 @@ function BurgerIngredients() {
   }
 
   const showIngredient = (id: string) => {
-    dispatch(setCurrentIngredient(ingredients.find((item: TIngredient) => item._id === id)))
+    const ingredient = ingredients.find((item: TIngredient) => item._id === id);
+    if (ingredient !== undefined) {
+      dispatch(setCurrentIngredient(ingredient));
+    }
+
   }
 
   const modal = (

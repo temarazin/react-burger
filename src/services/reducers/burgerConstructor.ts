@@ -67,7 +67,6 @@ export const burgerConstructorReducer = (state = initialState, action: TBurgerCo
         ingredients: state.ingredients.filter(item => item.uuid !== action.payload.uuid)
       }
     case ADD_BUN:
-      // state.ingredients.splice(0, 1, action.ingredient);
       const copyAr = state.ingredients.slice(0);
       copyAr[0] = action.payload.ingredient;
       return {

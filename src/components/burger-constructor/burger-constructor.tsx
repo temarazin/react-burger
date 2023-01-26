@@ -13,7 +13,7 @@ import BurgerConstructorItem from "../burger-constructor-item/burger-constructor
 import { burgerConstructorActions } from "../../services/actions/burgerConstructor";
 import { getOrder } from "../../services/actions/order";
 import { v4 as uuidv4 } from "uuid";
-import { RootState, TIngredient } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 import Loader from "../loader/loader";
 
 function BurgerConstructor(): JSX.Element {
@@ -22,10 +22,10 @@ function BurgerConstructor(): JSX.Element {
 
   const history = useHistory();
 
-  const { ingredients } = useSelector((store: RootState) => store.burgerConstructor);
-  const { isAuth } = useSelector((store: RootState) => store.user);
+  const { ingredients } = useSelector((store) => store.burgerConstructor);
+  const { isAuth } = useSelector((store) => store.user);
   const [canOrder, setCanOrder] = useState(false);
-  const { request, order: orderF } = useSelector((store: RootState) => store.order);
+  const { request, order: orderF } = useSelector((store) => store.order);
   const order = orderF.order;
 
   const onDropHandler = (item: TIngredient) => {

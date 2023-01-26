@@ -5,14 +5,14 @@ import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import { useSelector } from '../../services/hooks';
-import { RootState, TIngredient } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 
 type TBurderIngredientProps = {
   item: TIngredient
 }
 
 function BurderIngredient({ item }: TBurderIngredientProps): JSX.Element {
-  const { ingredients } = useSelector((store: RootState) => store.burgerConstructor);
+  const { ingredients } = useSelector((store) => store.burgerConstructor);
   const location = useLocation();
 
   let count = useMemo(

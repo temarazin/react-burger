@@ -5,13 +5,12 @@ import { useEffect } from 'react';
 import styles from './feed.module.css';
 import { useDispatch, useSelector } from '../../services/hooks';
 import { FeedScreen } from '../../components/feed-screen/feed-screen';
-import { RootState } from '../../utils/types';
 
 function Feed() {
   const dispatch = useDispatch();
 
   const { orders } = useSelector(
-    (store: RootState) => store.wsFeed
+    (store) => store.wsFeed
   );
 
   useEffect(() => {

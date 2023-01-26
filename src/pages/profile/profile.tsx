@@ -14,7 +14,7 @@ function Profile() {
   const [password, setPassword] = useState('');
   const [isEditForm, setIsEditForm] = useState(false);
 
-  const { user, request } = useSelector((store: any) => store.user);
+  const { user, request } = useSelector((store) => store.user);
 
   useEffect(() => {
     setName(user.name);

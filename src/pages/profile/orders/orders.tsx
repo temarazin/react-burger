@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import { wsProfileOrdersUrl } from '../../../utils/constants';
 import { getAccessToken } from '../../../utils/utils';
 import { wsProfileOrdersCloseConnection, wsProfileOrdersConnect } from '../../../services/actions/wsProfileOrders';
-import { RootState } from '../../../utils/types';
 import OrderFeed from '../../../components/order-feed/order-feed';
 
 function Orders() {
@@ -21,7 +20,7 @@ function Orders() {
   }, [dispatch]);
 
   const { orders } = useSelector(
-    (store: RootState) => store.wsOrderHistory
+    (store) => store.wsOrderHistory
   );
 
   return (
