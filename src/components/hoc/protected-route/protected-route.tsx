@@ -1,5 +1,4 @@
 import { useSelector } from "../../../services/hooks";
-import { useState, useEffect } from "react";
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import Loader from "../../loader/loader";
 import PropTypes from 'prop-types';
@@ -11,11 +10,6 @@ interface TProtectedRouteProps extends RouteProps {
 
 function ProtectedRoute({ children, auth = true, ...rest }: TProtectedRouteProps) {
   const { isAuth, authChecked } = useSelector((store) => store.user);
-  // const [canProceed, setCanProceed] = useState<boolean>(authChecked);
-
-  // useEffect(() => {
-  //   setCanProceed(authChecked)
-  // }, [authChecked])
 
   if (authChecked) {
     if (auth) {

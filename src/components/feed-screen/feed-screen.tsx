@@ -5,7 +5,8 @@ import styles from './feed-screen.module.css';
 
 export function FeedScreen() {
 
-  const ROW_COUNT = 10;
+  const ROW_COUNT = 5;
+  const COLUMN_COUNT = 3;
 
   const { orders, total, totalToday } = useSelector(
     (store:RootState) => store.wsFeed
@@ -17,11 +18,17 @@ export function FeedScreen() {
     orders.forEach(item => {
       if (item.status === 'done') {
         if (done[done.length - 1].length >= ROW_COUNT) {
+          if (done.length >= COLUMN_COUNT) {
+            return;
+          }
           done.push([]);
         }
         done[done.length - 1].push(item.number);
       } else {
         if (inprogress[done.length - 1].length >= ROW_COUNT) {
+          if (done.length >= COLUMN_COUNT) {
+            return;
+          }
           inprogress.push([]);
         }
         inprogress[inprogress.length - 1].push(item.number);

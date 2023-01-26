@@ -1,11 +1,10 @@
 .order-table {
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
 }
 
 .order-table__section {
-  flex: 0 1 200px;
+  flex: 1 1 50%;
 }
 
 .order-table__lists {
