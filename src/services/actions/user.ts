@@ -151,7 +151,6 @@ export const getUser:AppThunk = () => {
     dispatch({ type: START_REQUEST });
     let aToken = getAccessToken();
     let rToken = getRefreshToken();
-    console.log(aToken, rToken);
     let isTokenRefreshed = false;
     if (!aToken && !rToken) {
       dispatch({ type: GET_USER_FAILED });
