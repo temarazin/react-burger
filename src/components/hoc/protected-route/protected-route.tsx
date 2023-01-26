@@ -10,14 +10,14 @@ interface TProtectedRouteProps extends RouteProps {
 }
 
 function ProtectedRoute({ children, auth = true, ...rest }: TProtectedRouteProps) {
-  const { isAuth, authChecked } = useSelector((store: any) => store.user);
-  const [canProceed, setCanProceed] = useState<boolean>(authChecked);
+  const { isAuth, authChecked } = useSelector((store) => store.user);
+  // const [canProceed, setCanProceed] = useState<boolean>(authChecked);
 
-  useEffect(() => {
-    setCanProceed(authChecked)
-  }, [authChecked])
+  // useEffect(() => {
+  //   setCanProceed(authChecked)
+  // }, [authChecked])
 
-  if (canProceed) {
+  if (authChecked) {
     if (auth) {
       return (
         <Route

@@ -132,7 +132,7 @@ export const login:AppThunk = (email: string, password: string) => {
 export const logout:AppThunk = () => {
   return function (dispatch:AppDispatch) {
     api
-      .logout(getRefreshToken())
+      .logout(getRefreshToken() || '')
       .then((res) => {
         if (res.success) {
           removeRefreshToken();
@@ -151,6 +151,7 @@ export const getUser:AppThunk = () => {
     dispatch({ type: START_REQUEST });
     let aToken = getAccessToken();
     let rToken = getRefreshToken();
+    console.log(aToken, rToken);
     let isTokenRefreshed = false;
     if (!aToken && !rToken) {
       dispatch({ type: GET_USER_FAILED });
