@@ -1,10 +1,9 @@
 import styles from './burger-ingredients.module.css';
 
-import { useEffect, useState, useRef} from 'react';
+import { useState, useRef} from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from '../../services/hooks';
 
-import { getIngredients } from '../../services/actions/ingredients';
 import { ingredientDetailActions } from '../../services/actions/ingredientDetail';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -61,10 +60,6 @@ function BurgerIngredients() {
   const showIngredient = (id: string) => {
     dispatch(setCurrentIngredient(ingredients.find((item: TIngredient) => item._id === id)))
   }
-
-  useEffect(() => {
-    dispatch<any>(getIngredients())
-  }, [dispatch]);
 
   const modal = (
     <Modal title="Детали ингредиента" onClose={hideIngredient}>
