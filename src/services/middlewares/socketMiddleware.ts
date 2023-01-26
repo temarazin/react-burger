@@ -18,7 +18,7 @@ export const socketMiddleware = (wsActions: IWsActions): Middleware => {
     return (next) => (action) => {
       const { dispatch } = store;
       const { type } = action;
-      const { wsConnect, wsSendMessage, onOpen, onError, onClose, onMessage } = wsActions;
+      const { wsConnect, wsSendMessage, wsClose, onOpen, onError, onClose, onMessage } = wsActions;
 
       if (type === wsConnect(action.payload).type) {
         // объект класса WebSocket
@@ -49,6 +49,11 @@ export const socketMiddleware = (wsActions: IWsActions): Middleware => {
           const message = action.payload;
           // функция для отправки сообщения на сервер
           socket.send(JSON.stringify(message));
+        }
+
+        if (type === wsClose().type) {
+          socket.close();
+          socket = null;
         }
       }
 
