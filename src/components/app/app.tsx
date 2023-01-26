@@ -19,6 +19,7 @@ import Page404 from '../../pages/page-404/page-404';
 import Modal from '../modal/modal';
 import { TModalState } from '../../utils/types';
 import Feed from '../../pages/feed/feed';
+import { OrderInfo } from '../order-info/order-info';
 
 function App() {
 
@@ -49,6 +50,9 @@ function App() {
             <Route path="/feed" exact>
               <Feed />
             </Route>
+            <Route path="/feed/:orderId" exact>
+              <OrderInfo />
+            </Route>
             <ProtectedRoute auth={false} path="/login" exact>
               <Login />
             </ProtectedRoute>
@@ -67,6 +71,9 @@ function App() {
             <ProtectedRoute path="/profile/orders" exact>
               <Orders />
             </ProtectedRoute>
+            <ProtectedRoute path="/profile/orders/:orderId" exact>
+              <OrderInfo />
+            </ProtectedRoute>
             <Route path="/ingredients/:ingredientId" exact>
               <IngredientDetails />
             </Route>
@@ -76,14 +83,32 @@ function App() {
           </Switch>
 
           {background && (
-            <Route
-              path='/ingredients/:ingredientId'
-              children={
-                <Modal onClose={handleModalClose}>
-                  <IngredientDetails />
-                </Modal>
-              }
-            />
+            <Switch>
+              <Route
+                path='/ingredients/:ingredientId'
+                children={
+                  <Modal onClose={handleModalClose}>
+                    <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path='/feed/:orderId'
+                children={
+                  <Modal onClose={handleModalClose}>
+                    <OrderInfo />
+                  </Modal>
+                }
+              />
+              <Route
+                path='/profile/orders/:orderId'
+                children={
+                  <Modal onClose={handleModalClose}>
+                    <OrderInfo />
+                  </Modal>
+                }
+              />
+            </Switch>
           )}
         </main>
       </div>

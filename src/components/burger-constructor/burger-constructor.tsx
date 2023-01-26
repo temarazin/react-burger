@@ -89,7 +89,7 @@ function BurgerConstructor(): JSX.Element {
     }
     const orderAr = ingredients.map((item: TIngredient) => item._id);
     orderAr.push(orderAr[0]);
-    dispatch<any>(getOrder(ingredients.map((item:TIngredient) => item._id)));
+    dispatch<any>(getOrder(orderAr));
   };
 
   const modal = (

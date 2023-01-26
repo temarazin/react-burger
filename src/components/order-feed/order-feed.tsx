@@ -1,7 +1,6 @@
 import FeedItem from "../feed-item/feed-item";
 import styles from "./order-feed.module.css";
-import { useSelector } from "../../services/hooks";
-import { RootState, TOrderFull } from "../../utils/types";
+import { TOrderFull } from "../../utils/types";
 
 interface IOrderFeedProps {
   type: string;

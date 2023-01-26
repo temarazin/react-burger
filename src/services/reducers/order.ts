@@ -1,15 +1,19 @@
-import { TOrder } from "../../utils/types";
+import { TOrder, TOrderFull } from "../../utils/types";
 import { TOrderActions } from "../actions/order";
 import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
+  GET_ORDER_BY_ID_FAILED,
+  GET_ORDER_BY_ID_REQUEST,
+  GET_ORDER_BY_ID_SUCCESS,
 } from "../constants/actions";
 
 type TOrderState = {
   request: boolean,
   requestFailed: boolean,
-  order: TOrder
+  order: TOrder,
+  orderFull: TOrderFull | null
 }
 
 const initialState: TOrderState = {
@@ -20,7 +24,8 @@ const initialState: TOrderState = {
     order: {
       number: null
     }
-  }
+  },
+  orderFull: null
 }
 
 export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
@@ -38,6 +43,25 @@ export const orderReducer = (state = initialState, action: TOrderActions): TOrde
         requestFailed: false
       }
     case GET_ORDER_FAILED:
+      return {
+        ...state,
+        request: false,
+        requestFailed: true,
+      }
+    case GET_ORDER_BY_ID_REQUEST:
+      return {
+        ...state,
+        request: true,
+        orderFull: null,
+      }
+    case GET_ORDER_BY_ID_SUCCESS:
+      return {
+        ...state,
+        orderFull: action.order,
+        request: false,
+        requestFailed: false
+      }
+    case GET_ORDER_BY_ID_FAILED:
       return {
         ...state,
         request: false,

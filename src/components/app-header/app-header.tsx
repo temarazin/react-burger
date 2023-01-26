@@ -12,6 +12,7 @@ function AppHeader({ extraClass = '' }:TAppHeaderProps):JSX.Element {
 
   const isProfile = !!useRouteMatch('/profile');
   const isConstructor = !!useRouteMatch({ path: '/', exact: true});
+  const isFeed = !!useRouteMatch('/feed');
 
   return (
     <header className={`${styles.container} ${extraClass || ''} p-4`}>
@@ -24,8 +25,8 @@ function AppHeader({ extraClass = '' }:TAppHeaderProps):JSX.Element {
               </NavLink>
             </li>
             <li className={styles.menu__item}>
-              <NavLink to="/feed" className={`${styles.menu__button} p-5`}>
-                <ListIcon type="secondary" />
+              <NavLink to="/feed" className={`${styles.menu__button} p-5`} activeClassName={styles.menu__button_active}>
+                <ListIcon type={isFeed ? "primary" : "secondary"} />
                 <span className="text text_type_main-default ml-2">Лента заказов</span>
               </NavLink>
             </li>

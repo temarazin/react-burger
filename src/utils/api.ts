@@ -1,4 +1,4 @@
-import { TIngredient, TResponse, TUser } from "./types";
+import { TIngredient, TOrderFull, TResponse, TUser } from "./types";
 
 type TRequest = {
   baseUrl: string;
@@ -30,6 +30,11 @@ type TRefreshTokenResponse = TResponse & {
   accessToken: string;
   refreshToken: string;
 };
+
+type TOrderFullResponse = {
+  success: boolean,
+  orders: Array<TOrderFull>
+}
 
 class Api {
   protected _baseUrl: string;
@@ -67,6 +72,13 @@ class Api {
       }),
     });
     return await this._checkResponse<TOrderResponse>(res);
+  }
+
+  async getOrder(orderNumber: number) {
+    const res = await fetch(`${this._baseUrl}/orders/${orderNumber}`, {
+      headers: this._headers,
+    });
+    return await this._checkResponse<TOrderFullResponse>(res);
   }
 
   async resetPassword(email: string) {
