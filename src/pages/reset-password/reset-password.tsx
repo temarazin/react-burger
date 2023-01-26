@@ -1,7 +1,7 @@
 import styles from './reset-password.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import api from '../../utils/api';
 import { getCookie, deleteCookie } from '../../utils/cookie';
 
@@ -13,15 +13,15 @@ function ResetPassword() {
 
   const history = useHistory();
 
-  const handleSubmit = (e) => {
-    e.preventDefault(password, code);
-    api.setNewPassword(password)
+  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    api.setNewPassword(password, code)
       .then((res) => {
         if (res.success) {
           deleteCookie('passwordReset');
           history.push("/login");
         } else {
-          setError(res.message);
+          setError(res.message || 'Неизвестная ошибка');
         }
       })
       .catch((e) => {

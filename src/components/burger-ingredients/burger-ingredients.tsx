@@ -9,6 +9,10 @@ import { ingredientDetailActions } from '../../services/actionCreators/ingredien
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import BurderIngredientCategory from '../burger-ingredient-category/burger-ingredient-category';
+import { TIngredient, TIngredientCategory } from '../../utils/types';
+import { ingredientCategory } from '../../utils/enums';
+
+type TCategories = TIngredientCategory & {ref: any}
 
 function BurgerIngredients() {
 
@@ -18,50 +22,53 @@ function BurgerIngredients() {
   } = ingredientDetailActions;
   const dispatch = useDispatch();
 
-  const containerRef = useRef();
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const categories = [
+  const categories: TCategories[] = [
     {
       name: 'Булки',
-      type: 'bun',
-      ref: useRef(),
+      type: ingredientCategory.bun,
+      ref: useRef<HTMLDivElement>(),
     },
     {
       name: 'Соусы',
-      type: 'sauce',
-      ref: useRef(),
+      type: ingredientCategory.sauce,
+      ref: useRef<HTMLDivElement>(),
     },
     {
       name: 'Начинки',
-      type: 'main',
-      ref: useRef(),
+      type: ingredientCategory.main,
+      ref: useRef<HTMLDivElement>(),
     },
   ]
 
-  const { ingredients } = useSelector(store => store.ingredients);
-  const { currentIngredient } = useSelector(store => store.ingredientDetail)
+  const { ingredients } = useSelector((store: any) => store.ingredients);
+  const { currentIngredient } = useSelector((store: any) => store.ingredientDetail)
 
-  function onTabClickHandler(tab) {
-    categories.find(item => item.type === tab).ref.current.scrollIntoView({ behavior: 'smooth' });
+  function onTabClickHandler(tab: string): void {
+    const category = categories.find(item => item.type === tab);
+    if (category !== undefined) {
+      category.ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
-  const [current, setCurrent] = useState(['bun'])
+  const [current, setCurrent] = useState<ingredientCategory[]>([ingredientCategory.bun])
 
   const hideIngredient = () => {
     dispatch(unsetCurrentIngredient());
   }
 
-  const showIngredient = (id) => {
-    dispatch(setCurrentIngredient(ingredients.find(item => item._id === id)))
+  const showIngredient = (id: string) => {
+    dispatch(setCurrentIngredient(ingredients.find((item: TIngredient) => item._id === id)))
   }
 
   useEffect(() => {
-    dispatch(getIngredients())
+    dispatch<any>(getIngredients())
   }, [dispatch]);
 
   const modal = (
     <Modal title="Детали ингредиента" onClose={hideIngredient}>
-      <IngredientDetails currentIngredient={currentIngredient} />
+      <IngredientDetails />
     </Modal>
   )
 
@@ -72,13 +79,13 @@ function BurgerIngredients() {
           Соберите бургер
         </h1>
         <div className={`${styles.tabs} mb-10`}>
-          <Tab value="bun" active={current[current.length - 1] === 'bun'} onClick={onTabClickHandler}>
+          <Tab value="bun" active={current[current.length - 1] === ingredientCategory.bun} onClick={onTabClickHandler}>
             Булки
           </Tab>
-          <Tab value="sauce" active={current[current.length - 1] === 'sauce'} onClick={onTabClickHandler}>
+          <Tab value="sauce" active={current[current.length - 1] === ingredientCategory.sauce} onClick={onTabClickHandler}>
             Соус
           </Tab>
-          <Tab value="main" active={current[current.length - 1] === 'main'} onClick={onTabClickHandler}>
+          <Tab value="main" active={current[current.length - 1] === ingredientCategory.main} onClick={onTabClickHandler}>
             Начинки
           </Tab>
         </div>
@@ -86,8 +93,8 @@ function BurgerIngredients() {
           {categories.map((cat, index) => (
             <div ref={cat.ref} key={index}>
               <BurderIngredientCategory
-                root={containerRef.current}
-                data={ingredients.filter((item) => item.type === cat.type)}
+                root={containerRef.current!}
+                data={ingredients.filter((item:TIngredient) => item.type === cat.type)}
                 cat={{ name: cat.name, type: cat.type }}
                 current={current}
                 onIndegrientClick={showIngredient}

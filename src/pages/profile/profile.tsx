@@ -2,7 +2,7 @@ import styles from './profile.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { updateUser } from '../../services/actions/user';
 import ProfileMenu from '../../components/profile-menu/profile-menu';
 
@@ -14,7 +14,7 @@ function Profile() {
   const [password, setPassword] = useState('');
   const [isEditForm, setIsEditForm] = useState(false);
 
-  const { user, request } = useSelector(store => store.user);
+  const { user, request } = useSelector((store: any) => store.user);
 
   useEffect(() => {
     setName(user.name);
@@ -27,9 +27,9 @@ function Profile() {
 
 
 
-  const submitHandler = (e) => {
+  const submitHandler = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(updateUser(email, name, password))
+    dispatch<any>(updateUser(email, name, password))
   }
 
   const cancelHandler = () => {

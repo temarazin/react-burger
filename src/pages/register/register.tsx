@@ -2,14 +2,14 @@ import styles from './register.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useHistory  } from 'react-router-dom';
 import { registerUser } from '../../services/actions/user';
 
 function Register() {
 
   const dispatch = useDispatch();
-  const { isSuccessRegister, request, requestFailed } = useSelector(store => store.user);
+  const { isSuccessRegister, request, requestFailed } = useSelector((store:any) => store.user);
   const history = useHistory();
 
   // TODO: переделать на что-то более компактное
@@ -17,9 +17,9 @@ function Register() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(registerUser(email, password, name));
+    dispatch<any>(registerUser(email, password, name));
   }
 
   useEffect(() => {

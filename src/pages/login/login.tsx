@@ -2,21 +2,21 @@ import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { login } from '../../services/actions/user';
 
 function Login() {
 
   const dispatch = useDispatch();
-  const { request, requestFailed } = useSelector(store => store.user);
+  const { request, requestFailed } = useSelector((store:any) => store.user);
 
   // TODO: переделать на что-то более компактное
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch<any>(login(email, password));
   }
 
   return (

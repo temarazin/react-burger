@@ -5,13 +5,18 @@ import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
+import { TIngredient } from '../../utils/types';
 
-function BurderIngredient({ item }) {
-  const { ingredients } = useSelector(store => store.burgerConstructor);
+type TBurderIngredientProps = {
+  item: TIngredient
+}
+
+function BurderIngredient({ item }: TBurderIngredientProps): JSX.Element {
+  const { ingredients } = useSelector((store: any) => store.burgerConstructor);
   const location = useLocation();
 
   let count = useMemo(
-    () => ingredients.filter(ingred => ingred._id === item._id).length,
+    () => ingredients.filter((ingred: TIngredient) => ingred._id === item._id).length,
     [ingredients, item]
   );
   if (item.type === 'bun') {

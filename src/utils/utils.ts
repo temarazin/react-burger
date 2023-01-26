@@ -1,7 +1,7 @@
 import { getCookie, setCookie, deleteCookie } from "./cookie";
 import api from "./api";
 
-export function setAccessToken(token) {
+export function setAccessToken(token: string): void {
   setCookie('accessToken', token);
 }
 
@@ -13,12 +13,12 @@ export function removeAccessToken() {
   deleteCookie('accessToken');
 }
 
-export function setRefreshToken(token) {
+export function setRefreshToken(token: string) {
   localStorage.setItem('refreshToken', token);
 }
 
-export function getRefreshToken() {
-  return localStorage.getItem('refreshToken');
+export function getRefreshToken():string {
+  return localStorage.getItem('refreshToken') || 'token not found';
 }
 
 export function removeRefreshToken() {

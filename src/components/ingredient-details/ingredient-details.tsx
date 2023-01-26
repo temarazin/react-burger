@@ -2,11 +2,16 @@ import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../loader/loader';
+import { TIngredient } from '../../utils/types';
 
-function IngredientDetails() {
-  const { ingredientId } = useParams();
-  const { ingredients, request } = useSelector(store => store.ingredients);
-  let currentIngredient = ingredients.find(item => item._id === ingredientId)
+interface IIngredientDetailsParams {
+  ingredientId: string;
+}
+
+function IngredientDetails(): JSX.Element {
+  const { ingredientId } = useParams<IIngredientDetailsParams>();
+  const { ingredients, request } = useSelector((store:any) => store.ingredients);
+  let currentIngredient = ingredients.find((item: TIngredient) => item._id === ingredientId)
   if (!currentIngredient) {
     return (
       request
