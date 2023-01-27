@@ -3,7 +3,7 @@ import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { getUser } from '../../services/actions/user';
 import { getIngredients } from '../../services/actions/ingredients';
 import ProtectedRoute from '../hoc/protected-route/protected-route';
@@ -18,6 +18,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Page404 from '../../pages/page-404/page-404';
 import Modal from '../modal/modal';
 import { TModalState } from '../../utils/types';
+import Feed from '../../pages/feed/feed';
+import { OrderInfo } from '../order-info/order-info';
 
 function App() {
 
@@ -45,6 +47,12 @@ function App() {
             <Route path="/" exact>
               <Main />
             </Route>
+            <Route path="/feed" exact>
+              <Feed />
+            </Route>
+            <Route path="/feed/:orderId" exact>
+              <OrderInfo />
+            </Route>
             <ProtectedRoute auth={false} path="/login" exact>
               <Login />
             </ProtectedRoute>
@@ -63,6 +71,9 @@ function App() {
             <ProtectedRoute path="/profile/orders" exact>
               <Orders />
             </ProtectedRoute>
+            <ProtectedRoute path="/profile/orders/:orderId" exact>
+              <OrderInfo />
+            </ProtectedRoute>
             <Route path="/ingredients/:ingredientId" exact>
               <IngredientDetails />
             </Route>
@@ -72,14 +83,32 @@ function App() {
           </Switch>
 
           {background && (
-            <Route
-              path='/ingredients/:ingredientId'
-              children={
-                <Modal onClose={handleModalClose}>
-                  <IngredientDetails />
-                </Modal>
-              }
-            />
+            <Switch>
+              <Route
+                path='/ingredients/:ingredientId'
+                children={
+                  <Modal onClose={handleModalClose}>
+                    <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path='/feed/:orderId'
+                children={
+                  <Modal onClose={handleModalClose}>
+                    <OrderInfo />
+                  </Modal>
+                }
+              />
+              <Route
+                path='/profile/orders/:orderId'
+                children={
+                  <Modal onClose={handleModalClose}>
+                    <OrderInfo />
+                  </Modal>
+                }
+              />
+            </Switch>
           )}
         </main>
       </div>

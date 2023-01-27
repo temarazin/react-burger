@@ -1,9 +1,9 @@
 import styles from './order-details.module.css';
 import imageDone from '../../images/done.png';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 function OrderDetails(): JSX.Element {
-  const { order } = useSelector((store: any) => store.order);
+  const { order } = useSelector((store) => store.order);
 
   return (
     <div className={`${styles.order} mt-4 mb-8`}>

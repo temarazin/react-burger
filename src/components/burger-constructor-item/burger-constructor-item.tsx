@@ -5,8 +5,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { ingredientPropTypes } from "../../utils/prop-types";
-import { burgerConstructorActions } from "../../services/actionCreators/burgerConstructor";
-import { useDispatch } from "react-redux";
+import { burgerConstructorActions } from "../../services/actions/burgerConstructor";
+import { useDispatch } from "../../services/hooks";
 import { useDrag, useDrop } from "react-dnd";
 import { TIngredient } from "../../utils/types";
 
@@ -25,6 +25,9 @@ function BurgerConstructorItem({ item, isLocked = false, type = undefined }:TBur
 
   const onDropHandler = (draggedItem:TIngredient) => {
     if (draggedItem.uuid === item.uuid) {
+      return;
+    }
+    if (draggedItem.uuid === undefined || item.uuid === undefined) {
       return;
     }
     dispatch(moveIngredient(draggedItem.uuid, item.uuid));
@@ -49,7 +52,9 @@ function BurgerConstructorItem({ item, isLocked = false, type = undefined }:TBur
   });
 
   const handleRemove = () => {
-    dispatch(removeIngredient(item.uuid));
+    if (item.uuid !== undefined) {
+      dispatch(removeIngredient(item.uuid));
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import Loader from '../loader/loader';
 import { TIngredient } from '../../utils/types';
 
@@ -11,7 +11,7 @@ interface IIngredientDetailsParams {
 function IngredientDetails(): JSX.Element {
   const { ingredientId } = useParams<IIngredientDetailsParams>();
   const { ingredients, request } = useSelector((store:any) => store.ingredients);
-  let currentIngredient = ingredients.find((item: TIngredient) => item._id === ingredientId)
+  const currentIngredient = ingredients.find((item: TIngredient) => item._id === ingredientId)
   if (!currentIngredient) {
     return (
       request

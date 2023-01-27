@@ -17,8 +17,8 @@ export function setRefreshToken(token: string) {
   localStorage.setItem('refreshToken', token);
 }
 
-export function getRefreshToken():string {
-  return localStorage.getItem('refreshToken') || 'token not found';
+export function getRefreshToken():string | undefined {
+  return localStorage.getItem('refreshToken') || undefined;
 }
 
 export function removeRefreshToken() {
@@ -26,8 +26,9 @@ export function removeRefreshToken() {
 }
 
 export function refreshToken() {
-  if (!getRefreshToken()) return false;
-  return api.refreshToken(getRefreshToken())
+  const rToken = getRefreshToken();
+  if (rToken === undefined) return false;
+  return api.refreshToken(rToken)
     .then(res => {
       if (res?.success) {
         setAccessToken(res.accessToken);

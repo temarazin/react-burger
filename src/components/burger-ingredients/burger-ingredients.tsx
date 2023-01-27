@@ -1,11 +1,10 @@
 import styles from './burger-ingredients.module.css';
 
-import { useEffect, useState, useRef} from 'react';
+import { useState, useRef} from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 
-import { getIngredients } from '../../services/actions/ingredients';
-import { ingredientDetailActions } from '../../services/actionCreators/ingredientDetail';
+import { ingredientDetailActions } from '../../services/actions/ingredientDetail';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import BurderIngredientCategory from '../burger-ingredient-category/burger-ingredient-category';
@@ -42,8 +41,8 @@ function BurgerIngredients() {
     },
   ]
 
-  const { ingredients } = useSelector((store: any) => store.ingredients);
-  const { currentIngredient } = useSelector((store: any) => store.ingredientDetail)
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const { currentIngredient } = useSelector((store) => store.ingredientDetail)
 
   function onTabClickHandler(tab: string): void {
     const category = categories.find(item => item.type === tab);
@@ -59,12 +58,12 @@ function BurgerIngredients() {
   }
 
   const showIngredient = (id: string) => {
-    dispatch(setCurrentIngredient(ingredients.find((item: TIngredient) => item._id === id)))
-  }
+    const ingredient = ingredients.find((item: TIngredient) => item._id === id);
+    if (ingredient !== undefined) {
+      dispatch(setCurrentIngredient(ingredient));
+    }
 
-  useEffect(() => {
-    dispatch<any>(getIngredients())
-  }, [dispatch]);
+  }
 
   const modal = (
     <Modal title="Детали ингредиента" onClose={hideIngredient}>

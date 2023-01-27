@@ -1,7 +1,7 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { FormEvent, useState } from 'react';
 import { login } from '../../services/actions/user';
 
