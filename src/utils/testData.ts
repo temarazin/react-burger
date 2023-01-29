@@ -1,4 +1,4 @@
-import { TIngredient, TOrder, TOrderFull, TResponse, TUser } from "./types";
+import { TIngredient, TOrder, TOrderFull, TUser } from "./types";
 
 export const testIngredient: TIngredient = {
   _id: 'test ingredient',
