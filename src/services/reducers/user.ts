@@ -22,7 +22,7 @@ type TUserState = {
   isSuccessRegister: boolean,
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: {
     name: '',
     email: '',
