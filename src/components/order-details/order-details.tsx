@@ -7,7 +7,7 @@ function OrderDetails(): JSX.Element {
 
   return (
     <div className={`${styles.order} mt-4 mb-8`}>
-      <p className={`${styles.order__number} text text_type_digits-large`}>{order.order.number}</p>
+      <p className={`${styles.order__number} text text_type_digits-large`} data-test-id="order-number">{order.order.number}</p>
       <p className={`text text_type_main-default`}>идентификатор заказа</p>
       <img src={imageDone} alt="Иконка успешно" className="mt-15 mb-15" />
       <p className={`text text_type_main-small`}>Ваш заказ начали готовить</p>

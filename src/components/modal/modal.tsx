@@ -30,10 +30,10 @@ function Modal({ children, onClose, title = '' }: TModalProps): JSX.Element {
   return ReactDOM.createPortal(
     <>
       <ModalOverlay onClose={onClose} />
-      <div className={`${styles.modal} pt-10 pr-10 pb-15 pl-10`}>
+      <div className={`${styles.modal} pt-10 pr-10 pb-15 pl-10`} data-test-id="modal">
         <div className={styles.modal__header}>
           <h3 className={`${styles.modal__title} text text_type_main-medium`}>{title}</h3>
-          <button className={styles['modal__close-btn']} onClick={onClose}>
+          <button className={styles['modal__close-btn']} onClick={onClose} data-test-id="modal-close-btn">
             <CloseIcon type="primary" />
           </button>
         </div>

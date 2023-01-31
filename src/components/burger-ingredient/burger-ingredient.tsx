@@ -33,7 +33,7 @@ function BurderIngredient({ item }: TBurderIngredientProps): JSX.Element {
 
   return (
     <li className={`${styles.ingredient} ${isDrag && styles.isDragging}`} key={item._id} >
-      <Link className={styles.link} to={{
+      <Link className={styles.link} data-test-id="ingredient-link" to={{
         pathname: `/ingredients/${item._id}`,
         state: { background: location }
       }}>
