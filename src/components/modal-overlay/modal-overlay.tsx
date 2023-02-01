@@ -13,7 +13,7 @@ function ModalOverlay({ onClose }: Pick<TModalProps, "onClose">) {
   }
 
   return (
-    <div className={styles['modal-overlay']} onClick={handleClick}>
+    <div className={styles['modal-overlay']} onClick={handleClick} data-test-id="modal-overlay">
     </div>
   )
 }

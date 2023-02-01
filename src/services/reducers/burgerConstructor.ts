@@ -47,7 +47,7 @@ const placeholderMain: TStateIngredient = {
   image: 'https://code.s3.yandex.net/react/code/meat-03.png',
 };
 
-const initialState:TBurgerConstructorState = {
+export const initialState:TBurgerConstructorState = {
   ingredients: [
     placeholderBun,
     placeholderMain,

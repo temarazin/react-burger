@@ -10,7 +10,7 @@ type TWsFeedState = {
   totalToday: number;
 }
 
-const initialState: TWsFeedState = {
+export const initialState: TWsFeedState = {
   wsConnected: false,
   error: undefined,
   orders: [],

@@ -109,6 +109,7 @@ function BurgerConstructor(): JSX.Element {
                   isHover && styles.isHover
                 } pr-4 pl-4`}
                 ref={dropTarget}
+                data-test-id="constructor-container"
               >
                 {ingredients.map((item:TIngredient, i:number) => {
                   return (
@@ -128,7 +129,7 @@ function BurgerConstructor(): JSX.Element {
                 />
               </ul>
               <div className={`${styles["order-submit"]} mt-10`}>
-                <p className="text text_type_digits-medium mr-10">
+                <p className="text text_type_digits-medium mr-10" data-test-id="total-price">
                   {totalPrice} <CurrencyIcon type="primary" />
                 </p>
                 <Button
@@ -137,6 +138,7 @@ function BurgerConstructor(): JSX.Element {
                   size="large"
                   onClick={createOrder}
                   disabled={!canOrder}
+                  data-test-id="order-btn"
                 >
                   Оформить заказ
                 </Button>
