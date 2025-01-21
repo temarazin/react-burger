@@ -10,4 +10,4 @@ React app that imitates space burger restaurant.
 - order history
 - and others
 
-**Live app**: [Stellar burger](https://burger.temarazin.ru/)
+**Live app**: [Stellar burger](https://burger.temarazin.com/)
